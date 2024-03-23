@@ -1,0 +1,43 @@
+@model HotelManagementSystem.Pages.BackEndModel
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>房间编号</th>
+                <th>楼层</th>
+                <th>层内序号</th>
+                <th>类型</th>
+                <th>是否入住</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Room in Model.Rooms)
+            {
+                <tr>
+                    <td>@Room.room_trueId</td>
+                    <td>@Room.room_floor</td>
+                    <td>@Room.room_number</td>
+                    <td>@Room.roomclass.class_name</td>
+                    <td>
+                        @if (Room.room_ifStayIn)
+                        {
+                            <span>是</span>
+                        }
+                        else
+                        {
+                            <span>否</span>
+                        }
+                    <td>
+                    <td>
+                        <form asp-action="Delete" asp-controller="Rooms" method="post"
+                            onclick="return confirm('确定要删除这个房间吗？');">
+                            <input type="hidden" name="roomId" value="@Room.room_id" />
+                            <button type="submit" class="btn btn-danger">删除</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

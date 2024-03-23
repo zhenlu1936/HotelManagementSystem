@@ -1,0 +1,61 @@
+@model HotelManagementSystem.Pages.FrontEndModel
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>订单编号</th>
+                <th>价格</th>
+                <th>预订时间</th>
+                <th>入住时间</th>
+                <th>退房时间</th>
+                <th>是否入住</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var bills in Model.Bills)
+            {
+                <tr>
+                    <td>@bills.bill_id</td>
+                    <td>@bills.bill_price</td>
+                    <td>@bills.bill_bookTime</td>
+                    <td>@bills.bill_checkInTime.ToString("yyyy-MM-dd")</td>
+                    <td>@bills.bill_checkOutTime.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        @if (bills.bill_ifChecked)
+                        {
+                            <span>是</span>
+                        }
+                        else
+                        {
+                            <span>否</span>
+                        }
+                    <td>
+
+                            @if (bills.bill_ifChecked)
+                            {
+                            <form asp-action="Check" asp-controller="Bills" method="post">
+                                <input type="hidden" name="billId" value="@bills.bill_id" />
+                                <button type="submit" class="btn btn-primary">未入住</button>
+                            </form>
+                            }
+                            else
+                            {
+                            <form asp-action="Check" asp-controller="Bills" method="post">
+                                <input type="hidden" name="billId" value="@bills.bill_id" />
+                                <button type="submit" class="btn btn-primary">已入住</button>
+                            </form>
+                            }
+                    </td>
+                    <td>
+                        <form asp-action="Delete" asp-controller="Bills" method="post"
+                            onclick="return confirm('确定要删除这个订单吗？');">
+                            <input type="hidden" name="billId" value="@bills.bill_id" />
+                            <button type="submit" class="btn btn-danger">删除</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

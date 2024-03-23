@@ -1,0 +1,32 @@
+@model HotelManagementSystem.Pages.BackEndModel
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>类型编号</th>
+                <th>名称</th>
+                <th>最大人数</th>
+                <th>价格</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Class in Model.Classes)
+            {
+                <tr>
+                    <td>@Class.class_id</td>
+                    <td>@Class.class_name</td>
+                    <td>@Class.class_capacity</td>
+                    <td>@Class.class_price</td>
+                    <td>
+                        <form asp-action="Delete" asp-controller="Classes" method="post"
+                            onclick="return confirm('确定要删除这个类型吗？');">
+                            <input type="hidden" name="classId" value="@Class.class_id" />
+                            <button type="submit" class="btn btn-danger">删除</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

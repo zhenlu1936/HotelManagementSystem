@@ -1,0 +1,12 @@
+﻿@page
+@model HotelManagementSystem.Pages.BackEndModel;
+@{
+    ViewData["Title"] = "房间管理";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>这里是房间管理系统。</p>
+
+<div>@await Html.PartialAsync("Tables/ClassesTable")</div>
+
+<div>@await Html.PartialAsync("Tables/RoomsTable")</div>

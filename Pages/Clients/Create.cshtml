@@ -1,0 +1,10 @@
+﻿@page
+@model HotelManagementSystem.Pages.ClientModel
+@{
+    ViewData["Title"] = "创建订单 - 顾客";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>请在这里填写客人信息。</p>
+
+<div>@await Html.PartialAsync("New")</div>
