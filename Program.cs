@@ -1,4 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using HotelManagementSystem;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +14,11 @@ var connectionString = builder.Configuration.GetConnectionString("MySqlConnectio
 // 配置EF Core使用MySQL
 builder.Services.AddDbContext<HotelManagementContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+builder.Services.AddDbContext<UserContext>(options =>
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+builder.Services.AddDefaultIdentity<HotelStuff>(options =>
+    options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<UserContext>();
 
 var app = builder.Build();
 
@@ -26,6 +35,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

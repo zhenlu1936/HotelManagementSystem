@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<HotelStuff> SignInManager
+@inject UserManager<HotelStuff> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -39,6 +44,23 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/BackEnd">房间管理</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Stuff">员工管理</a>
+                        </li>
+                        @if (!SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item ms-auto">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Identity/Login">登录</a>
+                            </li>
+                        }
+                        else
+                        {
+                            var stuffNameClaim = User.Claims.FirstOrDefault(c => c.Type == "stuff_name")?.Value;
+                            <li class="nav-item ms-auto">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Identity/Logout">你好，@stuffNameClaim</a>
+                            </li>
+                        }
+
                     </ul>
                 </div>
             </div>

@@ -1,0 +1,28 @@
+@model HotelManagementSystem.Pages.StuffModel
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>工号</th>
+                <th>姓名</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var stuff in Model.Stuffs)
+            {
+                <tr>
+                    <td>@stuff.stuff_number</td>
+                    <td>@stuff.stuff_name</td>
+                    <td>
+                        <form asp-action="Delete" asp-controller="Stuff" method="post"
+                            onclick="return confirm('确定要删除这个员工吗？');">
+                            <input type="hidden" name="Id" value="@stuff.Id" />
+                            <button type="submit" class="btn btn-danger">删除</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
