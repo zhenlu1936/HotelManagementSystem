@@ -30,22 +30,13 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">主页</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Bills/Create">创建订单</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/FrontEnd/Manage">订单管理</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Rooms/Create">创建房间</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/BackEnd/Manage">房间管理</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Classes/Create">创建房间类型</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/FrontEnd">订单管理</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/BackEnd">房间管理</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Stuff">员工管理</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Stuff/Manage">员工管理</a>
                         </li>
                         @if (!SignInManager.IsSignedIn(User))
                         {

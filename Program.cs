@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Options;
 using HotelManagementSystem;
 
@@ -17,10 +18,12 @@ builder.Services.AddDbContext<HotelManagementContext>(options =>
 builder.Services.AddDbContext<UserContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-builder.Services.AddDefaultIdentity<HotelStuff>(options =>
+
+builder.Services.AddIdentity<HotelStuff, IdentityRole>(options =>
     options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<UserContext>();
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -1,0 +1,12 @@
+﻿@page
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization;
+@model HotelManagementSystem.Pages.ClassModel
+@{
+    ViewData["Title"] = "创建房间类型";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>请在这里创建房间类型。</p>
+
+<div>@await Html.PartialAsync("New")</div>

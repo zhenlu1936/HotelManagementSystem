@@ -1,0 +1,19 @@
+﻿@page
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization;
+
+@model HotelManagementSystem.Pages.BackEndModel;
+@{
+    ViewData["Title"] = "房间管理";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>这里是房间管理系统。</p>
+
+<div>@await Html.PartialAsync("ClassesTable")</div>
+
+<a class="btn btn-primary mb-4" asp-area="" asp-page="./Rooms/Create">新房间</a>
+
+<div>@await Html.PartialAsync("RoomsTable")</div>
+
+<a class="btn btn-primary mb-4" asp-area="" asp-page="./Classes/Create">新房间类型</a>

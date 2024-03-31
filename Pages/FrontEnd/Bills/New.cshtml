@@ -1,0 +1,61 @@
+@model HotelManagementSystem.Pages.BillsModel
+
+<form method="post">
+    <div class="form-group mt-3 mb-3" id="availableRooms">
+        <label for="SelectedRoomIds" class="control-label">选择房间</label>
+        <select asp-for="SelectedRoomIds" class="form-control" multiple></select>
+        <span asp-validation-for="SelectedRoomIds" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-3 mb-3">
+        <label asp-for="NewBill.bill_people" class="control-label">人数</label>
+        <input asp-for="NewBill.bill_people" id="bill_people" class="form-control" value=1 />
+        <span asp-validation-for="NewBill.bill_people" class="text-danger"></span>
+
+    </div>
+    <div class="form-group mt-3 mb-3">
+        <label asp-for="NewBill.bill_checkInTime" class="control-label">入住时间</label>
+        <input asp-for="NewBill.bill_checkInTime" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")"
+            type="date" />
+        <span asp-validation-for="NewBill.bill_checkInTime" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-3 mb-3">
+        <label asp-for="NewBill.bill_checkOutTime" class="control-label">退房时间</label>
+        <input asp-for="NewBill.bill_checkOutTime" class="form-control"
+            value="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")" type="date" />
+    </div>
+    <div class="form-group mt-3 mb-3">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            function fetchAvailableRooms() {
+                var checkInDate = $('#NewBill_bill_checkInTime').val();
+                var checkOutDate = $('#NewBill_bill_checkOutTime').val();
+
+                if (checkInDate && checkOutDate) {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/FrontEnd/Bills/Bills?handler=AvailableRooms',
+                        data: { checkInTime: checkInDate, checkOutTime: checkOutDate },
+                        success: function (data) {
+                            var rooms = $('#SelectedRoomIds');
+                            rooms.empty(); // 清空现有的选项
+                            $.each(data, function (index, item) {
+                                rooms.append($('<option></option>').val(item.value).text(item.text));
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("AJAX error:", status, error);
+                        }
+                    });
+                }
+            }
+
+            // 当任一日期选择器的值改变时，获取可用房间
+            $('#NewBill_bill_checkInTime, #NewBill_bill_checkOutTime').change(fetchAvailableRooms);
+            fetchAvailableRooms();
+        });
+    </script>
+</form>

@@ -1,5 +1,5 @@
 ﻿@page
-@model LoginModel
+@model HotelManagementSystem.Areas.Identity.Pages.Account.LoginModel
 
 @{
     ViewData["Title"] = "登录";
@@ -33,7 +33,6 @@
                     </label>
                 </div>
                 <div>
-                    <input type="hidden" name="returnUrl" value="@TempData["ReturnUrl"]">
                     <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">登录</button>
                 </div>
                 <div class="m-4">

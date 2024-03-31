@@ -1,0 +1,107 @@
+"filename", "language", "C#", "JSON", "Markdown", "CSS", "JavaScript", "ASP.NET Razor", "XML", "comment", "blank", "total"
+"d:\codes\HotelManagementSystem\Controllers\BillsController.cs", "C#", 75, 0, 0, 0, 0, 0, 0, 1, 11, 87
+"d:\codes\HotelManagementSystem\Controllers\ClassesController.cs", "C#", 24, 0, 0, 0, 0, 0, 0, 0, 7, 31
+"d:\codes\HotelManagementSystem\Controllers\ClientsController.cs", "C#", 25, 0, 0, 0, 0, 0, 0, 0, 6, 31
+"d:\codes\HotelManagementSystem\Controllers\RoomsController.cs", "C#", 42, 0, 0, 0, 0, 0, 0, 1, 9, 52
+"d:\codes\HotelManagementSystem\Controllers\StuffController.cs", "C#", 24, 0, 0, 0, 0, 0, 0, 0, 7, 31
+"d:\codes\HotelManagementSystem\Database.cs", "C#", 69, 0, 0, 0, 0, 0, 0, 0, 6, 75
+"d:\codes\HotelManagementSystem\HotelManagementSystem.csproj", "XML", 0, 0, 0, 0, 0, 0, 32, 0, 6, 38
+"d:\codes\HotelManagementSystem\Migrations\20240323014353_HMS3.3.Designer.cs", "C#", 147, 0, 0, 0, 0, 0, 0, 2, 51, 200
+"d:\codes\HotelManagementSystem\Migrations\20240323014353_HMS3.3.cs", "C#", 23, 0, 0, 0, 0, 0, 0, 3, 4, 30
+"d:\codes\HotelManagementSystem\Migrations\HotelManagementContextModelSnapshot.cs", "C#", 145, 0, 0, 0, 0, 0, 0, 1, 51, 197
+"d:\codes\HotelManagementSystem\Migrations\User\20240323051139_US1.0.Designer.cs", "C#", 210, 0, 0, 0, 0, 0, 0, 2, 70, 282
+"d:\codes\HotelManagementSystem\Migrations\User\20240323051139_US1.0.cs", "C#", 236, 0, 0, 0, 0, 0, 0, 3, 24, 263
+"d:\codes\HotelManagementSystem\Migrations\User\20240323101359_US1.1.Designer.cs", "C#", 210, 0, 0, 0, 0, 0, 0, 2, 70, 282
+"d:\codes\HotelManagementSystem\Migrations\User\20240323101359_US1.1.cs", "C#", 14, 0, 0, 0, 0, 0, 0, 3, 6, 23
+"d:\codes\HotelManagementSystem\Migrations\User\20240323101514_US1.2.Designer.cs", "C#", 210, 0, 0, 0, 0, 0, 0, 2, 70, 282
+"d:\codes\HotelManagementSystem\Migrations\User\20240323101514_US1.2.cs", "C#", 14, 0, 0, 0, 0, 0, 0, 3, 6, 23
+"d:\codes\HotelManagementSystem\Migrations\User\20240323101925_US1.3.Designer.cs", "C#", 216, 0, 0, 0, 0, 0, 0, 2, 72, 290
+"d:\codes\HotelManagementSystem\Migrations\User\20240323101925_US1.3.cs", "C#", 32, 0, 0, 0, 0, 0, 0, 3, 6, 41
+"d:\codes\HotelManagementSystem\Migrations\User\20240323103214_US1.4.Designer.cs", "C#", 214, 0, 0, 0, 0, 0, 0, 2, 72, 288
+"d:\codes\HotelManagementSystem\Migrations\User\20240323103214_US1.4.cs", "C#", 64, 0, 0, 0, 0, 0, 0, 3, 8, 75
+"d:\codes\HotelManagementSystem\Migrations\User\UserContextModelSnapshot.cs", "C#", 212, 0, 0, 0, 0, 0, 0, 1, 72, 285
+"d:\codes\HotelManagementSystem\Pages\BackEnd.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 9, 0, 0, 4, 13
+"d:\codes\HotelManagementSystem\Pages\BackEnd.cshtml.cs", "C#", 25, 0, 0, 0, 0, 0, 0, 0, 3, 28
+"d:\codes\HotelManagementSystem\Pages\Bills\Bills.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 2, 0, 0, 0, 2
+"d:\codes\HotelManagementSystem\Pages\Bills\Bills.cshtml.cs", "C#", 79, 0, 0, 0, 0, 0, 0, 0, 8, 87
+"d:\codes\HotelManagementSystem\Pages\Bills\Create.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 8, 0, 0, 2, 10
+"d:\codes\HotelManagementSystem\Pages\Bills\New.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 56, 0, 0, 5, 61
+"d:\codes\HotelManagementSystem\Pages\Classes\Classes.cshtml.cs", "C#", 32, 0, 0, 0, 0, 0, 0, 0, 3, 35
+"d:\codes\HotelManagementSystem\Pages\Classes\Create.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 8, 0, 0, 2, 10
+"d:\codes\HotelManagementSystem\Pages\Classes\New.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 39, 0, 0, 1, 40
+"d:\codes\HotelManagementSystem\Pages\Clients\Clients.cshtml.cs", "C#", 60, 0, 0, 0, 0, 0, 0, 0, 6, 66
+"d:\codes\HotelManagementSystem\Pages\Clients\Create.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 8, 0, 0, 2, 10
+"d:\codes\HotelManagementSystem\Pages\Clients\New.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 24, 0, 0, 1, 25
+"d:\codes\HotelManagementSystem\Pages\Error.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 23, 0, 0, 4, 27
+"d:\codes\HotelManagementSystem\Pages\Error.cshtml.cs", "C#", 22, 0, 0, 0, 0, 0, 0, 0, 7, 29
+"d:\codes\HotelManagementSystem\Pages\FrontEnd.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 25, 0, 0, 4, 29
+"d:\codes\HotelManagementSystem\Pages\FrontEnd.cshtml copy.cs", "C#", 50, 0, 0, 0, 0, 0, 0, 1, 8, 59
+"d:\codes\HotelManagementSystem\Pages\Identity\Login.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 85, 0, 0, 4, 89
+"d:\codes\HotelManagementSystem\Pages\Identity\Login.cshtml.cs", "C#", 95, 0, 0, 0, 0, 0, 0, 8, 19, 122
+"d:\codes\HotelManagementSystem\Pages\Identity\Logout.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 14, 0, 0, 3, 17
+"d:\codes\HotelManagementSystem\Pages\Identity\Logout.cshtml.cs", "C#", 28, 0, 0, 0, 0, 0, 0, 0, 3, 31
+"d:\codes\HotelManagementSystem\Pages\Identity\Register.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 76, 0, 0, 4, 80
+"d:\codes\HotelManagementSystem\Pages\Identity\Register.cshtml.cs", "C#", 103, 0, 0, 0, 0, 0, 0, 2, 15, 120
+"d:\codes\HotelManagementSystem\Pages\Identity\_ValidationScriptsPartial.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 18, 0, 0, 1, 19
+"d:\codes\HotelManagementSystem\Pages\Identity\_ViewImports.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 5, 0, 0, 1, 6
+"d:\codes\HotelManagementSystem\Pages\Identity\_ViewStart.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 3, 0, 0, 2, 5
+"d:\codes\HotelManagementSystem\Pages\Index.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 9, 0, 0, 2, 11
+"d:\codes\HotelManagementSystem\Pages\Index.cshtml.cs", "C#", 16, 0, 0, 0, 0, 0, 0, 0, 4, 20
+"d:\codes\HotelManagementSystem\Pages\Privacy.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 7, 0, 0, 2, 9
+"d:\codes\HotelManagementSystem\Pages\Privacy.cshtml.cs", "C#", 16, 0, 0, 0, 0, 0, 0, 0, 5, 21
+"d:\codes\HotelManagementSystem\Pages\Rooms\Create.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 8, 0, 0, 2, 10
+"d:\codes\HotelManagementSystem\Pages\Rooms\New.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 36, 0, 0, 1, 37
+"d:\codes\HotelManagementSystem\Pages\Rooms\Rooms.cshtml.cs", "C#", 54, 0, 0, 0, 0, 0, 0, 0, 5, 59
+"d:\codes\HotelManagementSystem\Pages\Shared\_Layout.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 79, 0, 0, 9, 88
+"d:\codes\HotelManagementSystem\Pages\Shared\_Layout.cshtml.css", "CSS", 0, 0, 0, 38, 0, 0, 0, 2, 9, 49
+"d:\codes\HotelManagementSystem\Pages\Shared\_LoginPartial.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 25, 0, 0, 3, 28
+"d:\codes\HotelManagementSystem\Pages\Shared\_ValidationScriptsPartial.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 2, 0, 0, 1, 3
+"d:\codes\HotelManagementSystem\Pages\Stuff.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 24, 0, 0, 3, 27
+"d:\codes\HotelManagementSystem\Pages\Stuff.cshtml.cs", "C#", 20, 0, 0, 0, 0, 0, 0, 0, 3, 23
+"d:\codes\HotelManagementSystem\Pages\Tables\BillsTable.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 59, 0, 0, 2, 61
+"d:\codes\HotelManagementSystem\Pages\Tables\ClassesTable.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 31, 0, 0, 1, 32
+"d:\codes\HotelManagementSystem\Pages\Tables\ClientsTable.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 31, 0, 0, 1, 32
+"d:\codes\HotelManagementSystem\Pages\Tables\RoomsTable.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 42, 0, 0, 1, 43
+"d:\codes\HotelManagementSystem\Pages\Tables\StuffTable.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 27, 0, 0, 1, 28
+"d:\codes\HotelManagementSystem\Pages\_ViewImports.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 3, 0, 0, 1, 4
+"d:\codes\HotelManagementSystem\Pages\_ViewStart.cshtml", "ASP.NET Razor", 0, 0, 0, 0, 0, 3, 0, 0, 1, 4
+"d:\codes\HotelManagementSystem\Program.cs", "C#", 29, 0, 0, 0, 0, 0, 0, 4, 15, 48
+"d:\codes\HotelManagementSystem\Properties\launchSettings.json", "JSON", 0, 38, 0, 0, 0, 0, 0, 0, 1, 39
+"d:\codes\HotelManagementSystem\README.md", "Markdown", 0, 0, 1, 0, 0, 0, 0, 0, 0, 1
+"d:\codes\HotelManagementSystem\UserContext.cs", "C#", 20, 0, 0, 0, 0, 0, 0, 4, 6, 30
+"d:\codes\HotelManagementSystem\appsettings.Development.json", "JSON", 0, 9, 0, 0, 0, 0, 0, 0, 1, 10
+"d:\codes\HotelManagementSystem\appsettings.json", "JSON", 0, 14, 0, 0, 0, 0, 0, 0, 0, 14
+"d:\codes\HotelManagementSystem\wwwroot\css\site.css", "CSS", 0, 0, 0, 18, 0, 0, 0, 0, 4, 22
+"d:\codes\HotelManagementSystem\wwwroot\js\site.js", "JavaScript", 0, 0, 0, 0, 0, 0, 0, 3, 2, 5
+"d:\codes\HotelManagementSystem\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css", "CSS", 0, 0, 0, 3855, 0, 0, 0, 7, 1135, 4997
+"d:\codes\HotelManagementSystem\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css", "CSS", 0, 0, 0, 1, 0, 0, 0, 6, 0, 7
+"d:\codes\HotelManagementSystem\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css", "CSS", 0, 0, 0, 3855, 0, 0, 0, 7, 1134, 4996
+"d:\codes\HotelManagementSystem\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css", "CSS", 0, 0, 0, 1, 0, 0, 0, 6, 0, 7
+"d:\codes\HotelManagementSystem\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css", "CSS", 0, 0, 0, 347, 0, 0, 0, 16, 64, 427
+"d:\codes\HotelManagementSystem\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css", "CSS", 0, 0, 0, 1, 0, 0, 0, 7, 0, 8
+"d:\codes\HotelManagementSystem\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css", "CSS", 0, 0, 0, 353, 0, 0, 0, 8, 63, 424
+"d:\codes\HotelManagementSystem\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css", "CSS", 0, 0, 0, 1, 0, 0, 0, 7, 0, 8
+"d:\codes\HotelManagementSystem\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css", "CSS", 0, 0, 0, 3729, 0, 0, 0, 9, 1128, 4866
+"d:\codes\HotelManagementSystem\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css", "CSS", 0, 0, 0, 1, 0, 0, 0, 6, 0, 7
+"d:\codes\HotelManagementSystem\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css", "CSS", 0, 0, 0, 3725, 0, 0, 0, 7, 1125, 4857
+"d:\codes\HotelManagementSystem\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css", "CSS", 0, 0, 0, 1, 0, 0, 0, 6, 0, 7
+"d:\codes\HotelManagementSystem\wwwroot\lib\bootstrap\dist\css\bootstrap.css", "CSS", 0, 0, 0, 9453, 0, 0, 0, 27, 1741, 11221
+"d:\codes\HotelManagementSystem\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css", "CSS", 0, 0, 0, 2, 0, 0, 0, 5, 0, 7
+"d:\codes\HotelManagementSystem\wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css", "CSS", 0, 0, 0, 9455, 0, 0, 0, 7, 1735, 11197
+"d:\codes\HotelManagementSystem\wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css", "CSS", 0, 0, 0, 2, 0, 0, 0, 5, 0, 7
+"d:\codes\HotelManagementSystem\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js", "JavaScript", 0, 0, 0, 0, 4846, 0, 0, 584, 1351, 6781
+"d:\codes\HotelManagementSystem\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js", "JavaScript", 0, 0, 0, 0, 1, 0, 0, 6, 0, 7
+"d:\codes\HotelManagementSystem\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js", "JavaScript", 0, 0, 0, 0, 3418, 0, 0, 495, 1065, 4978
+"d:\codes\HotelManagementSystem\wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js", "JavaScript", 0, 0, 0, 0, 1, 0, 0, 6, 0, 7
+"d:\codes\HotelManagementSystem\wwwroot\lib\bootstrap\dist\js\bootstrap.js", "JavaScript", 0, 0, 0, 0, 3457, 0, 0, 501, 1069, 5027
+"d:\codes\HotelManagementSystem\wwwroot\lib\bootstrap\dist\js\bootstrap.min.js", "JavaScript", 0, 0, 0, 0, 1, 0, 0, 6, 0, 7
+"d:\codes\HotelManagementSystem\wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js", "JavaScript", 0, 0, 0, 0, 306, 0, 0, 76, 54, 436
+"d:\codes\HotelManagementSystem\wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js", "JavaScript", 0, 0, 0, 0, 1, 0, 0, 7, 0, 8
+"d:\codes\HotelManagementSystem\wwwroot\lib\jquery-validation\LICENSE.md", "Markdown", 0, 0, 18, 0, 0, 0, 0, 0, 5, 23
+"d:\codes\HotelManagementSystem\wwwroot\lib\jquery-validation\dist\additional-methods.js", "JavaScript", 0, 0, 0, 0, 867, 0, 0, 443, 202, 1512
+"d:\codes\HotelManagementSystem\wwwroot\lib\jquery-validation\dist\additional-methods.min.js", "JavaScript", 0, 0, 0, 0, 1, 0, 0, 3, 0, 4
+"d:\codes\HotelManagementSystem\wwwroot\lib\jquery-validation\dist\jquery.validate.js", "JavaScript", 0, 0, 0, 0, 1228, 0, 0, 189, 244, 1661
+"d:\codes\HotelManagementSystem\wwwroot\lib\jquery-validation\dist\jquery.validate.min.js", "JavaScript", 0, 0, 0, 0, 1, 0, 0, 3, 0, 4
+"d:\codes\HotelManagementSystem\wwwroot\lib\jquery\dist\jquery.js", "JavaScript", 0, 0, 0, 0, 6895, 0, 0, 1911, 2076, 10882
+"d:\codes\HotelManagementSystem\wwwroot\lib\jquery\dist\jquery.min.js", "JavaScript", 0, 0, 0, 0, 1, 0, 0, 1, 1, 3
+"Total", "-", 2855, 61, 19, 34838, 21024, 789, 32, 4425, 15024, 79067

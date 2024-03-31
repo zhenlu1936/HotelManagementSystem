@@ -1,0 +1,31 @@
+﻿@page
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization;
+@model HotelManagementSystem.Pages.StuffModel;
+@{
+    ViewData["Title"] = "员工管理";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>这里是员工管理系统。</p>
+
+<div>@await Html.PartialAsync("StuffTable")</div>
+
+<a class="btn btn-primary mb-4" asp-area="" asp-page="./Register">新员工</a>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div id="SuccessMessage" class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        if ($("#SuccessMessage").length) {
+            setTimeout(function () {
+                $("#SuccessMessage").fadeOut("slow");
+            }, 5000);
+        }
+    });
+</script>
