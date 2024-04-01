@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HotelManagementSystem.Controllers
 {
@@ -19,6 +20,7 @@ namespace HotelManagementSystem.Controllers
             _context = context;
         }
 
+        [Authorize(Policy = "经理或管理员")]
         [Route("Stuff/Delete")]
         [HttpPost]
         public async Task<IActionResult> Delete(string Id)
@@ -33,6 +35,7 @@ namespace HotelManagementSystem.Controllers
             return RedirectToPage("/Stuff/Manage");
         }
 
+        [Authorize(Policy = "经理或管理员")]
         [Route("Stuff/ChangeRole")]
         [HttpPost]
         public async Task<IActionResult> ChangeRole(string Id)

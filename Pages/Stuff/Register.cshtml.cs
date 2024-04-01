@@ -104,36 +104,8 @@ namespace HotelManagementSystem.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    var claims = await _userManager.GetClaimsAsync(user);
-                    var role = await _context.StuffRoles.FindAsync(Input.stuff_role);
-
-                    var stuffNameClaim = claims.FirstOrDefault(c => c.Type == "stuff_name");
-                    var stuffRoleClaim = claims.FirstOrDefault(c => c.Type == "stuff_role");
-
-                    if (stuffNameClaim == null)
-                    {
-                        await _userManager.AddClaimAsync(user, new Claim("stuff_name", user.stuff_name));
-                    }
-                    else
-                    {
-                        await _userManager.ReplaceClaimAsync(user, stuffNameClaim, new Claim(stuffNameClaim.Type, user.stuff_name));
-                    }
-                    if (stuffRoleClaim == null)
-                    {
-                        await _userManager.AddClaimAsync(user, new Claim("stuff_role", role.role_name));
-                    }
-                    else
-                    {
-                        await _userManager.ReplaceClaimAsync(user, stuffRoleClaim, new Claim(stuffRoleClaim.Type, role.role_name));
-                    }
-
-                    await _signInManager.SignOutAsync();
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    //再次登出登入，保证claim正确刷新
-
-                    return Redirect("/Index");
+                    TempData["SuccessMessage"] = "创建成功！";
+                    return Redirect("/Stuff/Manage");
                 }
                 foreach (var error in result.Errors)
                 {

@@ -28,14 +28,24 @@
                         {
                             <span>否</span>
                         }
-                    <td>
-                    <td>
-                        <form asp-action="Delete" asp-controller="Rooms" method="post"
-                            onclick="return confirm('确定要删除这个房间吗？');">
-                            <input type="hidden" name="roomId" value="@Room.room_id" />
-                            <button type="submit" class="btn btn-danger">删除</button>
-                        </form>
                     </td>
+                    <td>
+                        <a class="btn btn-primary mb-4" asp-area="" asp-page="./Rooms/Detail"
+                            asp-route-roomId="@Room.room_id">房间详情</a>
+                    </td>
+                    @{
+                        var adminPermission = User.HasClaim("stuff_role", "经理") || User.HasClaim("stuff_role", "管理员");
+                        if (adminPermission)
+                        {
+                            <td>
+                                <form asp-action=" RoomDelete" asp-controller="BackEnd" method="post"
+                                    onclick="return confirm('确定要删除这个房间吗？');">
+                                    <input type="hidden" name="roomId" value="@Room.room_id" />
+                                    <button type="submit" class="btn btn-danger">删除</button>
+                                </form>
+                            </td>
+                        }
+                    }
                 </tr>
             }
         </tbody>

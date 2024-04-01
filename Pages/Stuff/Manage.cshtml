@@ -11,20 +11,44 @@
 
 <div>@await Html.PartialAsync("StuffTable")</div>
 
-<a class="btn btn-primary mb-4" asp-area="" asp-page="./Register">新员工</a>
+@{
+    var adminPermission = User.HasClaim("stuff_role", "经理") || User.HasClaim("stuff_role", "管理员");
+    if (adminPermission)
+    {
+        <a class="btn btn-primary mb-4" asp-area="" asp-page="./Register">新员工</a>
+    }
 
-@if (TempData["SuccessMessage"] != null)
-{
-    <div id="SuccessMessage" class="alert alert-success">
-        @TempData["SuccessMessage"]
-    </div>
+    if (TempData["SuccessMessage"] != null)
+    {
+        <div id="SuccessMessage" class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
 }
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
         if ($("#SuccessMessage").length) {
             setTimeout(function () {
                 $("#SuccessMessage").fadeOut("slow");
+            }, 5000);
+        }
+    });
+</script>
+
+@if (TempData["Denied"] != null)
+{
+    <div id="Denied" class="alert alert-danger">
+        @TempData["Denied"]
+    </div>
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        if ($("#Denied").length) {
+            setTimeout(function () {
+                $("#Denied").fadeOut("slow");
             }, 5000);
         }
     });

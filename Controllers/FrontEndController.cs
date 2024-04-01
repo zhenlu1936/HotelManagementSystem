@@ -19,10 +19,10 @@ namespace HotelManagementSystem.Controllers
             _context = context;
         }
 
-        [Route("Bills/Delete")]
         [HttpPost]
-        public async Task<IActionResult> BillDelete(int billId)
+        public async Task<IActionResult> BillDelete(int billId, string roomId = null, string returnUrl = null)
         {
+            returnUrl ??= Url.Content("~/");
             var bill = await _context.Bills.FindAsync(billId);
             var roomsContainingBill = await _context.Rooms
                 .Include(room => room.bills) // 确保加载Bills集合
@@ -55,13 +55,14 @@ namespace HotelManagementSystem.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("/FrontEnd/Manage");
+            if (roomId != null) TempData["RoomId"] = roomId;
+            return Redirect(returnUrl);
         }
 
-        [Route("Bills/Check")]
         [HttpPost]
-        public async Task<IActionResult> BillCheck(int billId)
+        public async Task<IActionResult> BillCheck(int billId, string roomId = null, string returnUrl = null)
         {
+            returnUrl ??= Url.Content("~/");
             var bill = await _context.Bills.FindAsync(billId);
             if (bill != null)
             {
@@ -81,13 +82,14 @@ namespace HotelManagementSystem.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("/FrontEnd/Manage");
+            if (roomId != null) TempData["RoomId"] = roomId;
+            return Redirect(returnUrl);
         }
 
-        [Route("Client/Delete")]
         [HttpPost]
-        public async Task<IActionResult> ClientDelete(int clientID)
+        public async Task<IActionResult> ClientDelete(int clientID, string clientName = null, string returnUrl = null)
         {
+            returnUrl ??= Url.Content("~/");
             var client = await _context.Clients.FindAsync(clientID);
             if (client != null)
             {
@@ -95,7 +97,9 @@ namespace HotelManagementSystem.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("/FrontEnd/Manage");
+            if (clientName != null) TempData["ClientName"] = clientName;
+            return Redirect(returnUrl);
         }
+
     }
 }

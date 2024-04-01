@@ -47,8 +47,10 @@
                         else
                         {
                             var stuffNameClaim = User.Claims.FirstOrDefault(c => c.Type == "stuff_name")?.Value;
+                            var stuffRoleClaim = User.Claims.FirstOrDefault(c => c.Type == "stuff_role")?.Value;
                             <li class="nav-item ms-auto">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Identity/Logout">你好，@stuffNameClaim</a>
+                                <a class="nav-link text-dark" asp-area=""
+                                    asp-page="/Identity/Logout">你好，@stuffRoleClaim@stuffNameClaim</a>
                             </li>
                         }
 

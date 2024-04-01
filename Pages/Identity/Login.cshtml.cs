@@ -23,11 +23,12 @@ namespace HotelManagementSystem.Areas.Identity.Pages.Account
         private readonly SignInManager<HotelStuff> _signInManager;
         private readonly UserManager<HotelStuff> _userManager;
         private readonly ILogger<LoginModel> _logger;
-
-        public LoginModel(SignInManager<HotelStuff> signInManager, UserManager<HotelStuff> userManager, ILogger<LoginModel> logger)
+        private readonly UserContext _context;
+        public LoginModel(SignInManager<HotelStuff> signInManager, UserContext context, UserManager<HotelStuff> userManager, ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _context = context;
             _logger = logger;
         }
         [BindProperty]
@@ -84,6 +85,7 @@ namespace HotelManagementSystem.Areas.Identity.Pages.Account
                     _logger.LogInformation("User logged in.");
                     var claims = await _userManager.GetClaimsAsync(user);
                     var stuffNameClaim = claims.FirstOrDefault(c => c.Type == "stuff_name");
+                    var stuffRoleClaim = claims.FirstOrDefault(c => c.Type == "stuff_role");
 
                     if (stuffNameClaim == null)
                     {
@@ -94,6 +96,16 @@ namespace HotelManagementSystem.Areas.Identity.Pages.Account
                     {
                         // 用户已经有了stuff_name的Claim，可以选择更新它
                         await _userManager.ReplaceClaimAsync(user, stuffNameClaim, new Claim(stuffNameClaim.Type, user.stuff_name));
+                    }
+                    if (stuffRoleClaim == null)
+                    {
+                        var role = await _context.StuffRoles.FindAsync(user.Rolerole_id);
+                        await _userManager.AddClaimAsync(user, new Claim("stuff_role", role.role_name));
+                    }
+                    else
+                    {
+                        var role = await _context.StuffRoles.FindAsync(user.Rolerole_id);
+                        await _userManager.ReplaceClaimAsync(user, stuffRoleClaim, new Claim(stuffRoleClaim.Type, role.role_name));
                     }
 
                     return LocalRedirect(returnUrl);

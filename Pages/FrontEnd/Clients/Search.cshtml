@@ -1,0 +1,60 @@
+﻿@page
+@model HotelManagementSystem.Pages.ClientSearchModel
+
+<h1>搜索订单</h1>
+
+<p>请在这里搜索订单。</p>
+
+<div>
+    <form method="post">
+        <div class="form-group mt-3 mb-3">
+            <label for="ClientName" class="control-label">顾客姓名</label>
+            <input asp-for="ClientName" class="form-control" />
+            <span asp-validation-for="ClientName" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3 mb-3">
+            <input type="submit" value="搜索" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+@if (Model.Clients?.Any() == true)
+{
+    <div>搜索结果：</div>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>订单编号</th>
+                    <th>顾客姓名</th>
+                    <th>身份证号</th>
+                    <th>电话号码</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var client in Model.Clients)
+                {
+                    <tr>
+                        <td>@client.Billbill_id</td>
+                        <td>@client.client_name</td>
+                        <td>@client.client_trueId</td>
+                        <td>@client.client_tel</td>
+                        <td>
+                            <form asp-action="ClientDelete" asp-controller="FrontEnd" method="post"
+                                onclick="return confirm('确定要删除这个客人吗？');">
+                                <input type="hidden" name="clientID" value="@client.client_id" />
+                                <input type="hidden" name="clientName" value="@Model.ClientName" />
+                                <input type="hidden" name="returnUrl" value="@Model.ReturnUrl">
+                                <button type="submit" class="btn btn-danger">删除</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else if (TempData["FirstTime"] != null)
+{
+    <div>没有找到匹配的结果。</div>
+}

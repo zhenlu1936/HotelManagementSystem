@@ -9,4 +9,28 @@
 
 <p>请在这里填写客人信息。</p>
 
-<div>@await Html.PartialAsync("New")</div>
+<div>
+    <form method="post">
+        @for (int i = 0; i < Model.People; i++)
+        {
+            <input type="hidden" name="id" value="@Model.id" />
+            <div class="form-group mt-3 mb-3">
+                <label asp-for="NewClients[i].client_name" class="control-label">@($"客户{i + 1}姓名")</label>
+                <input asp-for="NewClients[i].client_name" class="form-control" />
+                <span asp-validation-for="NewClients[i].client_name" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3 mb-3">
+                <label asp-for="NewClients[i].client_trueId" class="control-label">身份证号</label>
+                <input asp-for="NewClients[i].client_trueId" class="form-control" />
+                <span asp-validation-for="NewClients[i].client_trueId" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3 mb-3">
+                <label asp-for="NewClients[i].client_tel" class="control-label">电话号码</label>
+                <input asp-for="NewClients[i].client_tel" class="form-control" />
+            </div>
+        }
+        <div class="form-group mt-3 mb-3">
+            <input type="submit" value="创建" class="btn btn-primary" />
+        </div>
+    </form>
+</div>

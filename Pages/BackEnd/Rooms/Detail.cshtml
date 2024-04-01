@@ -1,0 +1,90 @@
+﻿@page
+@model HotelManagementSystem.Pages.RoomDetailModel
+@{
+    ViewData["Title"] = "房间详情";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>以下是房间详情。</p>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>类型编号</th>
+                <th>名称</th>
+                <th>最大人数</th>
+                <th>价格</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.DetailClass.class_id</td>
+                <td>@Model.DetailClass.class_name</td>
+                <td>@Model.DetailClass.class_capacity</td>
+                <td>@Model.DetailClass.class_price</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>订单编号</th>
+                <th>价格</th>
+                <th>预订时间</th>
+                <th>入住时间</th>
+                <th>退房时间</th>
+                <th>是否入住</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Bill in Model.DetailBills)
+            {
+                <tr>
+                    <td>@Bill.bill_id</td>
+                    <td>@Bill.bill_price</td>
+                    <td>@Bill.bill_bookTime</td>
+                    <td>@Bill.bill_checkInTime.ToString("yyyy-MM-dd")</td>
+                    <td>@Bill.bill_checkOutTime.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        @if (Bill.bill_ifChecked)
+                        {
+                            <span>是</span>
+                        }
+                        else
+                        {
+                            <span>否</span>
+                        }
+                    <td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>订单编号</th>
+                <th>顾客姓名</th>
+                <th>身份证号</th>
+                <th>电话号码</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Client in Model.DetailClients)
+            {
+                <tr>
+                    <td>@Client.Billbill_id</td>
+                    <td>@Client.client_name</td>
+                    <td>@Client.client_trueId</td>
+                    <td>@Client.client_tel</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

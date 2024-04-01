@@ -12,8 +12,36 @@
 
 <div>@await Html.PartialAsync("ClassesTable")</div>
 
-<a class="btn btn-primary mb-4" asp-area="" asp-page="./Rooms/Create">新房间</a>
+@{
+    var adminPermission = User.HasClaim("stuff_role", "经理") || User.HasClaim("stuff_role", "管理员");
+    if (adminPermission)
+    {
+        <a class="btn btn-primary mb-4" asp-area="" asp-page="./Rooms/Create">新房间类型</a>
+    }
+}
 
 <div>@await Html.PartialAsync("RoomsTable")</div>
 
-<a class="btn btn-primary mb-4" asp-area="" asp-page="./Classes/Create">新房间类型</a>
+@{
+    if (adminPermission)
+    {
+        <a class="btn btn-primary mb-4" asp-area="" asp-page="./Classes/Create">新房间</a>
+    }
+}
+
+@if (TempData["Denied"] != null)
+{
+    <div id="Denied" class="alert alert-danger">
+        @TempData["Denied"]
+    </div>
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        if ($("#Denied").length) {
+            setTimeout(function () {
+                $("#Denied").fadeOut("slow");
+            }, 5000);
+        }
+    });
+</script>

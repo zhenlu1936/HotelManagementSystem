@@ -7,6 +7,7 @@ namespace HotelManagementSystem.Pages
     {
         private readonly ILogger<FrontEndModel> _logger;
         private readonly HotelManagementContext _context;
+        public string ReturnUrl { get; set; }
         public IList<Bill> Bills { get; set; } = new List<Bill>();
         public IList<Client> Clients { get; set; } = new List<Client>();
 
@@ -50,6 +51,7 @@ namespace HotelManagementSystem.Pages
         }
         public async Task OnGetAsync()
         {
+            ReturnUrl ??= $"{Request.Scheme}://{Request.Host}{Request.Path}{Request.QueryString}";
             await Clear();
             Bills = await _context.Bills.ToListAsync();
             Clients = await _context.Clients.ToListAsync();

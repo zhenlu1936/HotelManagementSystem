@@ -12,9 +12,13 @@
 
 <div>@await Html.PartialAsync("BillsTable")</div>
 
+<a class="btn btn-primary mb-4" asp-area="" asp-page="./Bills/Search">搜索订单</a>
+
 <div>@await Html.PartialAsync("ClientsTable")</div>
 
-<a class="btn btn-primary mb-4" asp-area="" asp-page="./Bills/Create">新订单</a>
+<div><a class="btn btn-primary mb-4" asp-area="" asp-page="./Clients/Search">搜索顾客</a></div>
+
+<div><a class="btn btn-primary mb-4" asp-area="" asp-page="./Bills/Create">新订单</a></div>
 
 @if (TempData["SuccessMessage"] != null)
 {

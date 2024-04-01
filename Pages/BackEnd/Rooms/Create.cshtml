@@ -1,6 +1,6 @@
 ﻿@page
-@attribute [Authorize]
 @using Microsoft.AspNetCore.Authorization;
+@attribute [Authorize(Policy = "经理或管理员")]
 @model HotelManagementSystem.Pages.RoomModel
 @{
     ViewData["Title"] = "创建房间";
@@ -9,4 +9,40 @@
 
 <p>请在这里创建房间。</p>
 
-<div>@await Html.PartialAsync("New")</div>
+<div>
+    <form method="post">
+        <div class="form-group mt-3 mb-3">
+            <label asp-for="NewRoom.room_floor" class="control-label">楼层</label>
+            <input asp-for="NewRoom.room_floor" class="form-control" />
+            <span asp-validation-for="NewRoom.room_floor" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3 mb-3">
+            <label asp-for="NewRoom.room_number" class="control-label">层内编号</label>
+            <input asp-for="NewRoom.room_number" class="form-control" />
+            <span asp-validation-for="NewRoom.room_number" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="NewRoom.Classclass_id" class="control-label">类型</label>
+            <select asp-for="NewRoom.Classclass_id" asp-items="Model.ClassOptions" class="form-control"></select>
+        </div>
+        <div class="form-group mt-3 mb-3">
+            <input type="submit" value="创建" class="btn btn-primary" />
+        </div>
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div id="SuccessMessage" class="alert alert-success">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                if ($("#SuccessMessage").length) {
+                    setTimeout(function () {
+                        $("#SuccessMessage").fadeOut("slow");
+                    }, 5000);
+                }
+            });
+        </script>
+    </form>
+</div>

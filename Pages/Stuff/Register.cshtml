@@ -1,4 +1,6 @@
 ﻿@page
+@using Microsoft.AspNetCore.Authorization;
+@attribute [Authorize(Policy = "经理或管理员")]
 @model HotelManagementSystem.Areas.Identity.Pages.Account.RegisterModel
 @{
     ViewData["Title"] = "注册";

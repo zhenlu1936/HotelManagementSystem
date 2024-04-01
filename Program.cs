@@ -18,9 +18,15 @@ builder.Services.AddDbContext<HotelManagementContext>(options =>
 builder.Services.AddDbContext<UserContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-
 builder.Services.AddIdentity<HotelStuff, IdentityRole>(options =>
     options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<UserContext>();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("经理或管理员", policy =>
+        policy.RequireAssertion(context =>
+            context.User.HasClaim(claim =>
+                (claim.Type == "stuff_role" && (claim.Value == "管理员" || claim.Value == "经理")))));
+});
 
 var app = builder.Build();
 

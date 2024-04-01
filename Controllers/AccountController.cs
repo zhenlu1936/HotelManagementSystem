@@ -10,8 +10,6 @@ namespace HotelManagementSystem.Controllers
         private readonly UserContext _context;
         private readonly UserManager<HotelStuff> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        public int click = 0;
-        public List<IdentityRole> AllRoles { get; set; }
         public AccountController(RoleManager<IdentityRole> roleManager, UserContext context, UserManager<HotelStuff> userManager)
         {
             _userManager = userManager;
@@ -24,6 +22,18 @@ namespace HotelManagementSystem.Controllers
         {
             TempData["ReturnUrl"] = returnUrl;
             return RedirectToPage("/Identity/Login");
+        }
+
+        [Route("Account/AccessDenied")]
+        public IActionResult AccessDenied(string returnUrl = null)
+        {
+            TempData["Denied"] = "您没有足够的权限！";
+            var path = returnUrl.Trim('/');
+            var segments = path.Split('/');
+            var firstSegment = segments.FirstOrDefault();
+            firstSegment = "/" + firstSegment + "/Manage";
+
+            return Redirect(firstSegment);
         }
 
     }

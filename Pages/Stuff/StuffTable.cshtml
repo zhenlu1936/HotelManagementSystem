@@ -17,8 +17,7 @@
                     <td>@stuff.StuffNumber</td>
                     <td>@stuff.StuffName</td>
                     <td>@stuff.StuffRole</td>
-                    @if (User.Identity.IsAuthenticated)
-                    {
+                    @{
                         var adminPermission = User.HasClaim("stuff_role", "经理") || User.HasClaim("stuff_role", "管理员");
                         var managerPermission = User.HasClaim("stuff_role", "经理");
                         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

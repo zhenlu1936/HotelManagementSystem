@@ -1,22 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace HotelManagementSystem.Controllers
 {
 
-    public class RoomsController : Controller
+    public class BackEndController : Controller
     {
         private readonly HotelManagementContext _context;
 
-        public RoomsController(HotelManagementContext context)
+        public BackEndController(HotelManagementContext context)
         {
             _context = context;
         }
 
-        [Route("Rooms/Delete")]
+
+        [Authorize(Policy = "经理或管理员")]
         [HttpPost]
-        public async Task<IActionResult> Delete(int roomId)
+        public async Task<IActionResult> RoomDelete(int roomId)
         {
             var room = await _context.Rooms.FindAsync(roomId);
             var billsContainingRoom = await _context.Bills
@@ -47,7 +50,7 @@ namespace HotelManagementSystem.Controllers
             return RedirectToPage("/BackEnd/Manage");
         }
 
-        [Route("Classes/Delete")]
+        [Authorize(Policy = "经理或管理员")]
         [HttpPost]
         public async Task<IActionResult> ClassDelete(int classId)
         {
@@ -56,6 +59,23 @@ namespace HotelManagementSystem.Controllers
             {
                 _context.Classes.Remove(Class);
                 await _context.SaveChangesAsync();
+            }
+
+            return RedirectToPage("/BackEnd/Manage");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RoomDetail(int roomId)
+        {
+            var Room = await _context.Rooms.FindAsync(roomId);
+            if (Room != null)
+            {
+                var DetailedBills = await _context.Bills
+                .Include(bill => bill.rooms)
+                .Where(bill => bill.rooms
+                .Any(room => room.room_id == roomId))
+                .ToListAsync();
+
             }
 
             return RedirectToPage("/BackEnd/Manage");
