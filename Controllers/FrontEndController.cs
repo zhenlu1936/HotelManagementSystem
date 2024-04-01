@@ -20,7 +20,7 @@ namespace HotelManagementSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> BillDelete(int billId, string roomId = null, string returnUrl = null)
+        public async Task<IActionResult> BillDelete(int billId, int roomId, string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
             var bill = await _context.Bills.FindAsync(billId);
@@ -55,12 +55,12 @@ namespace HotelManagementSystem.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            if (roomId != null) TempData["RoomId"] = roomId;
+            if (roomId != -1) TempData["RoomId"] = roomId;
             return Redirect(returnUrl);
         }
 
         [HttpPost]
-        public async Task<IActionResult> BillCheck(int billId, string roomId = null, string returnUrl = null)
+        public async Task<IActionResult> BillCheck(int billId, int roomId, string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
             var bill = await _context.Bills.FindAsync(billId);
@@ -82,7 +82,26 @@ namespace HotelManagementSystem.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            if (roomId != null) TempData["RoomId"] = roomId;
+            if (roomId != -1) TempData["RoomId"] = roomId;
+            return Redirect(returnUrl);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> BillPay(int billId, int roomId, string returnUrl = null)
+        {
+            returnUrl ??= Url.Content("~/");
+            var bill = await _context.Bills.FindAsync(billId);
+            if (bill != null)
+            {
+                bill.bill_ifPaid = !bill.bill_ifPaid;
+                if (bill.bill_ifPaid == true)
+                {
+                    bill.bill_payTime = DateTime.Now;
+                }
+                await _context.SaveChangesAsync();
+            }
+
+            if (roomId != -1) TempData["RoomId"] = roomId;
             return Redirect(returnUrl);
         }
 

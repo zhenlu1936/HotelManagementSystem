@@ -23,6 +23,7 @@
                             onclick="return confirm('确定要删除这个客人吗？');">
                             <input type="hidden" name="clientID" value="@client.client_id" />
                             <input type="hidden" name="returnUrl" value="@Model.ReturnUrl">
+                            <input type="hidden" name="clientName" value="@Model.ClientName" />
                             <button type="submit" class="btn btn-danger">删除</button>
                         </form>
                     </td>

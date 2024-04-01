@@ -38,6 +38,7 @@
                 <th>入住时间</th>
                 <th>退房时间</th>
                 <th>是否入住</th>
+                <th>是否结款</th>
             </tr>
         </thead>
         <tbody>
@@ -58,7 +59,17 @@
                         {
                             <span>否</span>
                         }
+                    </td>
                     <td>
+                        @if (Bill.bill_ifPaid)
+                        {
+                            <span>是</span>
+                        }
+                        else
+                        {
+                            <span>否</span>
+                        }
+                    </td>
                 </tr>
             }
         </tbody>

@@ -15,6 +15,8 @@ public class Bill
     public DateTime bill_checkInTime { get; set; } = DateTime.Today;
     public DateTime bill_checkOutTime { get; set; } = DateTime.Today.AddDays(1);
     public bool bill_ifChecked { get; set; } = false;
+    public DateTime bill_payTime { get; set; }
+    public bool bill_ifPaid { get; set; } = false;
     public ICollection<Client> clients { get; set; } = new List<Client>();
     public ICollection<Room> rooms { get; set; } = new List<Room>();
 }

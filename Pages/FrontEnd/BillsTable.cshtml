@@ -10,6 +10,8 @@
                 <th>入住时间</th>
                 <th>退房时间</th>
                 <th>是否入住</th>
+                <th>是否结款</th>
+                <th>结款时间</th>
             </tr>
         </thead>
         <tbody>
@@ -32,9 +34,26 @@
                         }
                     </td>
                     <td>
+                        @if (Bill.bill_ifPaid)
+                        {
+                            <span>是</span>
+                        <td>@Bill.bill_payTime</td>
+                        }
+                        else
+                        {
+                        <span>否</span>
+                        <td></td>
+                        }
+                    </td>
+                    <td>
+                        <a class="btn btn-info mb-4" asp-area="" asp-page="/FrontEnd/Bills/Detail"
+                            asp-route-billId="@Bill.bill_id">订单详情</a>
+                    </td>
+                    <td>
                         <form asp-action="BillCheck" asp-controller="FrontEnd" method="post">
                             <input type="hidden" name="billId" value="@Bill.bill_id" />
                             <input type="hidden" name="returnUrl" value="@Model.ReturnUrl">
+                            <input type="hidden" name="roomId" value="@Model.RoomTrueId">
                             @if (Bill.bill_ifChecked)
                             {
                                 <button type="submit" class="btn btn-primary">未入住</button>
@@ -47,14 +66,27 @@
                         </form>
                     </td>
                     <td>
-                        <a class="btn btn-primary mb-4" asp-area="" asp-page="./Bills/Detail"
-                            asp-route-billId="@Bill.bill_id">订单详情</a>
+                        <form asp-action="BillPay" asp-controller="FrontEnd" method="post">
+                            <input type="hidden" name="billId" value="@Bill.bill_id" />
+                            <input type="hidden" name="returnUrl" value="@Model.ReturnUrl">
+                            <input type="hidden" name="roomId" value="@Model.RoomTrueId">
+                            @if (Bill.bill_ifPaid)
+                            {
+                                <button type="submit" class="btn btn-primary">未结款</button>
+                            }
+                            else
+                            {
+
+                                <button type="submit" class="btn btn-primary">已结款</button>
+                            }
+                        </form>
                     </td>
                     <td>
                         <form asp-action="BillDelete" asp-controller="FrontEnd" method="post"
                             onclick="return confirm('确定要删除这个订单吗？');">
                             <input type="hidden" name="billId" value="@Bill.bill_id" />
                             <input type="hidden" name="returnUrl" value="@Model.ReturnUrl">
+                            <input type="hidden" name="roomId" value="@Model.RoomTrueId">
                             <button type="submit" class="btn btn-danger">删除</button>
                         </form>
                     </td>

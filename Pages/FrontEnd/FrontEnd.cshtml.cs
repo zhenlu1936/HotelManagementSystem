@@ -1,13 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelManagementSystem.Pages
 {
     public class FrontEndModel : PageModel
     {
-        private readonly ILogger<FrontEndModel> _logger;
         private readonly HotelManagementContext _context;
         public string ReturnUrl { get; set; }
+
+        [BindProperty]
+        public int RoomTrueId { get; set; } = -1;
+
+        [BindProperty]
+        public string ClientName { get; set; }
         public IList<Bill> Bills { get; set; } = new List<Bill>();
         public IList<Client> Clients { get; set; } = new List<Client>();
 
@@ -44,17 +50,17 @@ namespace HotelManagementSystem.Pages
             await _context.SaveChangesAsync();
         }
 
-        public FrontEndModel(ILogger<FrontEndModel> logger, HotelManagementContext context)
+        public FrontEndModel(HotelManagementContext context)
         {
-            _logger = logger;
             _context = context;
         }
-        public async Task OnGetAsync()
+        virtual public async Task<IActionResult> OnGetAsync()
         {
             ReturnUrl ??= $"{Request.Scheme}://{Request.Host}{Request.Path}{Request.QueryString}";
             await Clear();
             Bills = await _context.Bills.ToListAsync();
             Clients = await _context.Clients.ToListAsync();
+            return Page();
         }
 
     }

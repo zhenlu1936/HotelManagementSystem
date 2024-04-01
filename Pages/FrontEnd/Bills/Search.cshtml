@@ -21,69 +21,7 @@
 @if (Model.Bills?.Any() == true)
 {
     <div>搜索结果：</div>
-    <div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>订单编号</th>
-                    <th>价格</th>
-                    <th>预订时间</th>
-                    <th>入住时间</th>
-                    <th>退房时间</th>
-                    <th>是否入住</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var Bill in Model.Bills)
-                {
-                    <tr>
-                        <td>@Bill.bill_id</td>
-                        <td>@Bill.bill_price</td>
-                        <td>@Bill.bill_bookTime</td>
-                        <td>@Bill.bill_checkInTime.ToString("yyyy-MM-dd")</td>
-                        <td>@Bill.bill_checkOutTime.ToString("yyyy-MM-dd")</td>
-                        <td>
-                            @if (Bill.bill_ifChecked)
-                            {
-                                <span>是</span>
-                            }
-                            else
-                            {
-                                <span>否</span>
-                            }
-                        </td>
-                        <td>
-                            <form asp-action="BillCheck" asp-controller="FrontEnd" method="post">
-                                <input type="hidden" name="billId" value="@Bill.bill_id" />
-                                <input type="hidden" name="roomId" value="@Model.RoomTrueId" />
-                                <input type="hidden" name="returnUrl" value="@Model.ReturnUrl">
-                                @if (Bill.bill_ifChecked)
-                                {
-                                    <button type="submit" class="btn btn-primary">未入住</button>
-                                }
-                                else
-                                {
-
-                                    <button type="submit" class="btn btn-primary">已入住</button>
-                                }
-                            </form>
-                        </td>
-                        <td>
-                            <a class="btn btn-primary mb-4" asp-area="" asp-page="/FrontEnd/Bills/Detail"
-                                asp-route-billId="@Bill.bill_id">订单详情</a>
-                        </td>
-                        <td>
-                            <form asp-action="BillDelete" asp-controller="FrontEnd" method="post"
-                                onclick="return confirm('确定要删除这个订单吗？');">
-                                <input type="hidden" name="billId" value="@Bill.bill_id" />
-                                <button type="submit" class="btn btn-danger">删除</button>
-                            </form>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+    <div>@await Html.PartialAsync("/Pages/FrontEnd/BillsTable.cshtml")</div>
 }
 else if (TempData["FirstTime"] != null)
 {

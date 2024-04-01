@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelManagementSystem.Migrations
 {
     [DbContext(typeof(HotelManagementContext))]
-    partial class HotelManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20240401043325_HMS4.0")]
+    partial class HMS40
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,11 +44,8 @@ namespace HotelManagementSystem.Migrations
                     b.Property<bool>("bill_ifChecked")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<bool>("bill_ifPaid")
+                    b.Property<bool>("bill_ifPayed")
                         .HasColumnType("tinyint(1)");
-
-                    b.Property<DateTime>("bill_payTime")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("bill_people")
                         .HasColumnType("int");

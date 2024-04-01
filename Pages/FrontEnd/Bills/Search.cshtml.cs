@@ -5,19 +5,15 @@ using NuGet.Packaging;
 
 namespace HotelManagementSystem.Pages
 {
-    public class BillSearchModel : PageModel
+    public class BillSearchModel : FrontEndModel
     {
         private readonly HotelManagementContext _context;
-        public List<Bill> Bills { get; set; } = new List<Bill>();
-
-        [BindProperty]
-        public int RoomTrueId { get; set; } = 0;
-        public string ReturnUrl { get; set; }
-        public BillSearchModel(HotelManagementContext context)
+        public BillSearchModel(HotelManagementContext context) : base(context)
         {
             _context = context;
+            RoomTrueId = 0;
         }
-        public async Task<IActionResult> OnGetAsync()
+        override public async Task<IActionResult> OnGetAsync()
         {
             ReturnUrl ??= $"{Request.Scheme}://{Request.Host}{Request.Path}{Request.QueryString}";
             if (TempData["RoomId"] != null)

@@ -8,9 +8,13 @@
 
   <ItemGroup>
     <Compile Remove="Pages\Roomclasses\**" />
+    <Compile Remove="Pages\Rooms\**" />
     <Content Remove="Pages\Roomclasses\**" />
+    <Content Remove="Pages\Rooms\**" />
     <EmbeddedResource Remove="Pages\Roomclasses\**" />
+    <EmbeddedResource Remove="Pages\Rooms\**" />
     <None Remove="Pages\Roomclasses\**" />
+    <None Remove="Pages\Rooms\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,10 +34,6 @@
     <PackageReference Include="MySql.Data" Version="8.3.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureAD.UI" Version="6.0.28" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Pages\Rooms\" />
   </ItemGroup>
 
 </Project>
