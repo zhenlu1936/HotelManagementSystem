@@ -23,6 +23,10 @@
                         if (adminPermission)
                         {
                             <td>
+                                <a class="btn btn-primary mb-4" asp-area="" asp-page="/BackEnd/Classes/Edit"
+                                    asp-route-classId="@Class.class_id">编辑</a>
+                            </td>
+                            <td>
                                 <form asp-action="ClassDelete" asp-controller="BackEnd" method="post"
                                     onclick="return confirm('确定要删除这个类型吗？');">
                                     <input type="hidden" name="classId" value="@Class.class_id" />

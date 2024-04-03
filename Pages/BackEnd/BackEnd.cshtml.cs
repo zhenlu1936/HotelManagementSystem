@@ -17,11 +17,13 @@ namespace HotelManagementSystem.Pages
         public async Task OnGetAsync()
         {
             Classes = await _context.Classes.ToListAsync();
+            Classes = Classes.OrderBy(c => c.class_price).ToList();
+
             Rooms = await _context.Rooms
             .Include(room => room.roomclass)
             .Include(room => room.bills)
             .ToListAsync();
-
+            Rooms = Rooms.OrderBy(r => r.room_floor * 100 + r.room_number).ToList();
         }
 
     }

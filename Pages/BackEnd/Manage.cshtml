@@ -16,7 +16,7 @@
     var adminPermission = User.HasClaim("stuff_role", "经理") || User.HasClaim("stuff_role", "管理员");
     if (adminPermission)
     {
-        <a class="btn btn-primary mb-4" asp-area="" asp-page="./Rooms/Create">新房间类型</a>
+        <a class="btn btn-primary mb-4" asp-area="" asp-page="./Classes/Create">新房间类型</a>
     }
 }
 
@@ -25,9 +25,28 @@
 @{
     if (adminPermission)
     {
-        <a class="btn btn-primary mb-4" asp-area="" asp-page="./Classes/Create">新房间</a>
+        <a class="btn btn-primary mb-4" asp-area="" asp-page="./Rooms/Create">新房间</a>
     }
 }
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div id="SuccessMessage" class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // 如果#successMessage元素存在，即有消息需要显示
+        if ($("#SuccessMessage").length) {
+            // 设置5秒后隐藏消息
+            setTimeout(function () {
+                $("#SuccessMessage").fadeOut("slow");
+            }, 5000); // 5000毫秒 = 5秒
+        }
+    });
+</script>
 
 @if (TempData["Denied"] != null)
 {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using HotelManagementSystem.Pages;
 
 public class RoomQueryModel
 {
@@ -20,7 +21,7 @@ namespace HotelManagementSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> BillDelete(int billId, int roomId, string returnUrl = null)
+        public async Task<IActionResult> BillDelete(int billId, int? roomId, DateTime? checkInTime, DateTime? checkOutTime, string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
             var bill = await _context.Bills.FindAsync(billId);
@@ -55,12 +56,14 @@ namespace HotelManagementSystem.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            if (roomId != -1) TempData["RoomId"] = roomId;
+            TempData["RoomId"] = roomId;
+            TempData["CheckInTime"] = checkInTime;
+            TempData["CheckOutTime"] = checkOutTime;
             return Redirect(returnUrl);
         }
 
         [HttpPost]
-        public async Task<IActionResult> BillCheck(int billId, int roomId, string returnUrl = null)
+        public async Task<IActionResult> BillCheck(int billId, int? roomId, DateTime? checkInTime, DateTime? checkOutTime, string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
             var bill = await _context.Bills.FindAsync(billId);
@@ -82,12 +85,14 @@ namespace HotelManagementSystem.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            if (roomId != -1) TempData["RoomId"] = roomId;
+            TempData["RoomId"] = roomId;
+            TempData["CheckInTime"] = checkInTime;
+            TempData["CheckOutTime"] = checkOutTime;
             return Redirect(returnUrl);
         }
 
         [HttpPost]
-        public async Task<IActionResult> BillPay(int billId, int roomId, string returnUrl = null)
+        public async Task<IActionResult> BillPay(int billId, int? roomId, DateTime? checkInTime, DateTime? checkOutTime, string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
             var bill = await _context.Bills.FindAsync(billId);
@@ -101,12 +106,14 @@ namespace HotelManagementSystem.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            if (roomId != -1) TempData["RoomId"] = roomId;
+            TempData["RoomId"] = roomId;
+            TempData["CheckInTime"] = checkInTime;
+            TempData["CheckOutTime"] = checkOutTime;
             return Redirect(returnUrl);
         }
 
         [HttpPost]
-        public async Task<IActionResult> ClientDelete(int clientID, string clientName = null, string returnUrl = null)
+        public async Task<IActionResult> ClientDelete(int clientID, string returnUrl = null, string clientName = null, string clientTel = null, string clientTrueId = null)
         {
             returnUrl ??= Url.Content("~/");
             var client = await _context.Clients.FindAsync(clientID);
@@ -117,6 +124,9 @@ namespace HotelManagementSystem.Controllers
             }
 
             if (clientName != null) TempData["ClientName"] = clientName;
+            if (clientTel != null) TempData["ClientTel"] = clientTel;
+            if (clientTrueId != null) TempData["ClientTrueId"] = clientTrueId;
+
             return Redirect(returnUrl);
         }
 

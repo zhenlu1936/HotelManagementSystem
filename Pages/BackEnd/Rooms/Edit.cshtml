@@ -3,9 +3,9 @@
 @attribute [Authorize(Policy = "经理或管理员")]
 @model HotelManagementSystem.Pages.RoomModel
 @{
-    ViewData["Title"] = "创建房间";
-    ViewData["Text"] = "请在这里创建房间";
-    ViewData["Submit"] = "创建";
+    ViewData["Title"] = "编辑房间";
+    ViewData["Text"] = "请在这里编辑房间";
+    ViewData["Submit"] = "编辑";
 }
 
 <div>@await Html.PartialAsync("/Pages/BackEnd/Rooms/Rooms.cshtml")</div>

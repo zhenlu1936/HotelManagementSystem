@@ -1,16 +1,26 @@
 ﻿@page
 @model HotelManagementSystem.Pages.ClientSearchModel
 
-<h1>搜索订单</h1>
+<h1>搜索顾客</h1>
 
-<p>请在这里搜索订单。</p>
+<p>请在这里搜索顾客。</p>
 
 <div>
     <form method="post">
         <div class="form-group mt-3 mb-3">
-            <label for="ClientName" class="control-label">顾客姓名</label>
+            <label for="ClientName" class="control-label">姓名</label>
             <input asp-for="ClientName" class="form-control" />
             <span asp-validation-for="ClientName" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3 mb-3">
+            <label for="ClientTel" class="control-label">电话</label>
+            <input asp-for="ClientTel" class="form-control" />
+            <span asp-validation-for="ClientTel" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3 mb-3">
+            <label for="ClientTrueId" class="control-label">身份证号</label>
+            <input asp-for="ClientTrueId" class="form-control" />
+            <span asp-validation-for="ClientTrueId" class="text-danger"></span>
         </div>
         <div class="form-group mt-3 mb-3">
             <input type="submit" value="搜索" class="btn btn-primary" />
@@ -25,5 +35,18 @@
 }
 else if (TempData["FirstTime"] != null)
 {
-    <div>没有找到匹配的结果。</div>
+    <div id="NoResult" class="alert alert-danger">
+        没有匹配的结果
+    </div>
 }
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        if ($("#NoResult").length) {
+            setTimeout(function () {
+                $("#NoResult").fadeOut("slow");
+            }, 5000);
+        }
+    });
+</script>

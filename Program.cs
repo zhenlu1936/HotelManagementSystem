@@ -28,6 +28,14 @@ builder.Services.AddAuthorization(options =>
                 (claim.Type == "stuff_role" && (claim.Value == "管理员" || claim.Value == "经理")))));
 });
 
+builder.Services.AddDistributedMemoryCache(); // 使用内存缓存存储会话
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromHours(2); // 设置会话超时时间
+    options.Cookie.HttpOnly = true; // 增加安全性
+    options.Cookie.IsEssential = true; // 标记为必要Cookie
+});
+
 var app = builder.Build();
 
 
@@ -42,6 +50,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseSession();
 app.UseRouting();
 
 app.UseAuthentication();

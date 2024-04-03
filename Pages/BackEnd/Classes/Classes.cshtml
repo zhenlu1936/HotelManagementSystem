@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNetCore.Authorization;
+@attribute [Authorize(Policy = "经理或管理员")]
+@model HotelManagementSystem.Pages.ClassModel
+
+<h1>@ViewData["Title"]</h1>
+
+<p>@ViewData["Text"]</p>
+
+<div>
+    <form method="post">
+        <div class="form-group mt-3 mb-3">
+            <label asp-for="NewClass.class_name" class="control-label">名称</label>
+            <input asp-for="NewClass.class_name" class="form-control" />
+            <span asp-validation-for="NewClass.class_name" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3 mb-3">
+            <label asp-for="NewClass.class_capacity" class="control-label">最大人数</label>
+            <input asp-for="NewClass.class_capacity" class="form-control" />
+            <span asp-validation-for="NewClass.class_capacity" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3 mb-3">
+            <label asp-for="NewClass.class_price" class="control-label">价格</label>
+            <input asp-for="NewClass.class_price" class="form-control" />
+            <span asp-validation-for="NewClass.class_price" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3 mb-3">
+            <input type="submit" value="@ViewData["Submit"]" class="btn btn-primary" />
+        </div>
+
+    </form>
+</div>

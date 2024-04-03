@@ -33,6 +33,9 @@ namespace HotelManagementSystem.Pages
                     StuffRole = role.role_name
                 });
             }
+
+            Stuff = Stuff.OrderBy(s => _context.StuffRoles.FirstOrDefault(r => r.role_name == s.StuffRole).role_id).ToList();
+
         }
 
     }

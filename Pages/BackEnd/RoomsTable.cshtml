@@ -38,7 +38,11 @@
                         if (adminPermission)
                         {
                             <td>
-                                <form asp-action=" RoomDelete" asp-controller="BackEnd" method="post"
+                                <a class="btn btn-primary mb-4" asp-area="" asp-page="/BackEnd/Rooms/Edit"
+                                    asp-route-roomId="@Room.room_id">编辑</a>
+                            </td>
+                            <td>
+                                <form asp-action="RoomDelete" asp-controller="BackEnd" method="post"
                                     onclick="return confirm('确定要删除这个房间吗？');">
                                     <input type="hidden" name="roomId" value="@Room.room_id" />
                                     <button type="submit" class="btn btn-danger">删除</button>
@@ -50,4 +54,5 @@
             }
         </tbody>
     </table>
+
 </div>

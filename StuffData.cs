@@ -45,6 +45,10 @@ public class UserContext : IdentityDbContext<HotelStuff>
             new Role { role_id = 3, role_name = "后端" },
             new Role { role_id = 4, role_name = "前端" }
         );
+
+        builder.Entity<HotelStuff>()
+            .HasIndex(p => p.stuff_number)
+            .IsUnique();
     }
 }
 

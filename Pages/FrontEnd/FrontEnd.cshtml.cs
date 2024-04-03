@@ -8,12 +8,6 @@ namespace HotelManagementSystem.Pages
     {
         private readonly HotelManagementContext _context;
         public string ReturnUrl { get; set; }
-
-        [BindProperty]
-        public int RoomTrueId { get; set; } = -1;
-
-        [BindProperty]
-        public string ClientName { get; set; }
         public IList<Bill> Bills { get; set; } = new List<Bill>();
         public IList<Client> Clients { get; set; } = new List<Client>();
 
@@ -50,16 +44,22 @@ namespace HotelManagementSystem.Pages
             await _context.SaveChangesAsync();
         }
 
+        [ActivatorUtilitiesConstructor]
         public FrontEndModel(HotelManagementContext context)
         {
             _context = context;
         }
+
         virtual public async Task<IActionResult> OnGetAsync()
         {
             ReturnUrl ??= $"{Request.Scheme}://{Request.Host}{Request.Path}{Request.QueryString}";
             await Clear();
             Bills = await _context.Bills.ToListAsync();
+            Bills = Bills.OrderBy(b => b.bill_id).ToList();
+
             Clients = await _context.Clients.ToListAsync();
+            Clients = Clients.OrderBy(c => c.Billbill_id).ToList();
+
             return Page();
         }
 

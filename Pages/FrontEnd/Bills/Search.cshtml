@@ -13,6 +13,15 @@
             <span asp-validation-for="RoomTrueId" class="text-danger"></span>
         </div>
         <div class="form-group mt-3 mb-3">
+            <label asp-for="CheckInTime" class="control-label">入住时间</label>
+            <input asp-for="CheckInTime" class="form-control" type="date" />
+            <span asp-validation-for="CheckInTime" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3 mb-3">
+            <label asp-for="CheckOutTime" class="control-label">退房时间</label>
+            <input asp-for="CheckOutTime" class="form-control" type="date" />
+        </div>
+        <div class="form-group mt-3 mb-3">
             <input type="submit" value="搜索" class="btn btn-primary" />
         </div>
     </form>
@@ -25,5 +34,18 @@
 }
 else if (TempData["FirstTime"] != null)
 {
-    <div>没有找到匹配的结果。</div>
+    <div id="NoResult" class="alert alert-danger">
+        没有匹配的结果
+    </div>
 }
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        if ($("#NoResult").length) {
+            setTimeout(function () {
+                $("#NoResult").fadeOut("slow");
+            }, 5000);
+        }
+    });
+</script>

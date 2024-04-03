@@ -14,8 +14,13 @@ namespace HotelManagementSystem.Pages
             _logger = logger;
             _context = context;
         }
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int? classId)
         {
+            if (classId != null)
+            {
+                NewClass = await _context.Classes.FindAsync(classId);
+                HttpContext.Session.SetInt32("FormerId", (int)classId);
+            }
             return Page();
         }
 
@@ -26,10 +31,23 @@ namespace HotelManagementSystem.Pages
                 return Page();
             }
 
-            _context.Classes.Add(NewClass);
+            int? FormerId = HttpContext.Session.GetInt32("FormerId");
+            if (FormerId == null)
+            {
+                _context.Classes.Add(NewClass);
+            }
+            else
+            {
+                var FormerClass = await _context.Classes.FindAsync(FormerId);
+                FormerClass.class_price = NewClass.class_price;
+                FormerClass.class_name = NewClass.class_name;
+                FormerClass.class_capacity = NewClass.class_capacity;
+            }
             await _context.SaveChangesAsync();
             TempData["SuccessMessage"] = "提交成功！";
-            return Page();
+            HttpContext.Session.SetInt32("FormerId", 0);
+            return Redirect("/BackEnd/Manage");
+
         }
     }
 }

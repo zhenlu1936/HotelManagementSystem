@@ -48,8 +48,9 @@ namespace HotelManagementSystem.Areas.Identity.Pages.Account
         }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public InputModel Input { get; set; } = new InputModel();
         public string ReturnUrl { get; set; }
+        public HotelStuff User { get; set; }
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
         public class InputModel
         {
@@ -69,20 +70,30 @@ namespace HotelManagementSystem.Areas.Identity.Pages.Account
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "密码")]
-            public string Password { get; set; }
+            public string Password { get; set; } = "123456aA!";
 
             [DataType(DataType.Password)]
             [Display(Name = "确认密码")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-            public string ConfirmPassword { get; set; }
+            public string ConfirmPassword { get; set; } = "123456aA!";
         }
 
         public async Task Initialize()
         {
             RoleOptions = new SelectList(await _context.StuffRoles.ToListAsync(), "role_id", "role_name");
         }
-        public async Task OnGetAsync(string returnUrl = null)
+        public async Task OnGetAsync(string stuffId, string returnUrl = null)
         {
+            if (stuffId != null)
+            {
+                User = await _context.Users.FindAsync(stuffId);
+                Input.stuff_number = User.stuff_number;
+                Input.stuff_name = User.stuff_name;
+                Input.stuff_role = User.Rolerole_id;
+
+                HttpContext.Session.SetString("FormerId", stuffId);
+            }
+
             await Initialize();
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -92,26 +103,47 @@ namespace HotelManagementSystem.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            string FormerId = HttpContext.Session.GetString("FormerId");
+            if (FormerId != null)
+            {
+                User = await _context.Users.FindAsync(FormerId);
+                Input.stuff_role = User.Rolerole_id;
+
+            }
+
             if (ModelState.IsValid)
             {
-                var user = CreateUser();
-                user.stuff_number = Input.stuff_number;
-                user.stuff_name = Input.stuff_name;
-                user.Rolerole_id = Input.stuff_role;
 
-                await _userStore.SetUserNameAsync(user, Input.stuff_number, CancellationToken.None);
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                if (FormerId == null) User = CreateUser();
+                User.stuff_number = Input.stuff_number;
+                User.Rolerole_id = Input.stuff_role;
+                User.stuff_name = Input.stuff_name;
 
-                if (result.Succeeded)
+                await _userStore.SetUserNameAsync(User, Input.stuff_number, CancellationToken.None);
+
+                IdentityResult result;
+                if (FormerId == null)
                 {
-                    TempData["SuccessMessage"] = "创建成功！";
+                    result = await _userManager.CreateAsync(User, Input.Password);
+
+                    if (result.Succeeded)
+                    {
+                        TempData["SuccessMessage"] = "创建成功！";
+                        return Redirect("/Stuff/Manage");
+                    }
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+                else
+                {
+                    await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = "成功！";
                     return Redirect("/Stuff/Manage");
                 }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
             }
+
             await Initialize();
             return Page();
         }

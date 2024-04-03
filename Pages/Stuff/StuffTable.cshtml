@@ -26,15 +26,16 @@
                             if (stuff.StuffRole != "经理" && (stuff.StuffRole != "管理员" || managerPermission))
                             {
                                 <td>
+                                    <a class="btn btn-primary mb-4" asp-area="" asp-page="/Stuff/Edit"
+                                        asp-route-stuffId="@stuff.StuffId">编辑</a>
+                                </td>
+                                <td>
                                     <form asp-action="Delete" asp-controller="Stuff" method="post"
                                         onclick="return confirm('确定要删除这个员工吗？');">
                                         <input type="hidden" name="Id" value="@stuff.StuffId" />
                                         <button type="submit" class="btn btn-danger">删除</button>
                                     </form>
                                 </td>
-                            }
-                            if (stuff.StuffRole != "经理" && (stuff.StuffRole != "管理员" || managerPermission))
-                            {
                                 <td>
                                     <form asp-action="ChangeRole" asp-controller="Stuff" method="post">
                                         <input type="hidden" name="Id" value="@stuff.StuffId" />
@@ -42,8 +43,8 @@
                                     </form>
                                 </td>
                             }
-                        }
 
+                        }
                     }
                 </tr>
             }

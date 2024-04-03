@@ -26,8 +26,13 @@ namespace HotelManagementSystem.Pages
         {
             ClassOptions = new SelectList(await _context.Classes.ToListAsync(), "class_id", "class_name");
         }
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int? roomId)
         {
+            if (roomId != null)
+            {
+                NewRoom = await _context.Rooms.FindAsync(roomId);
+                HttpContext.Session.SetInt32("FormerId", (int)roomId);
+            }
             await Initialize();
             return Page();
         }
@@ -39,20 +44,29 @@ namespace HotelManagementSystem.Pages
                 return Page();
             }
 
-            var existingFloor = await _context.Rooms.FirstOrDefaultAsync(r => r.room_floor == NewRoom.room_floor);
-            var existingNumber = await _context.Rooms.FirstOrDefaultAsync(r => r.room_number == NewRoom.room_number);
-            if (existingFloor != null && existingNumber != null)
+            int? FormerId = HttpContext.Session.GetInt32("FormerId");
+            var existingRoom = await _context.Rooms.FirstOrDefaultAsync(r => r.room_floor == NewRoom.room_floor && r.room_number == NewRoom.room_number);
+            if (existingRoom != null && (FormerId == null || existingRoom.room_id != FormerId))
             {
                 ModelState.AddModelError("NewRoom.room_number", "房间编号已存在");
                 await Initialize();
                 return Page();
             }
 
-            _context.Rooms.Add(NewRoom);
+            if (FormerId == null)
+                _context.Rooms.Add(NewRoom);
+            else
+            {
+                var FormerRoom = await _context.Rooms.FindAsync(FormerId);
+                FormerRoom.room_floor = NewRoom.room_floor;
+                FormerRoom.room_number = NewRoom.room_number;
+                FormerRoom.roomclass = NewRoom.roomclass;
+            }
             await _context.SaveChangesAsync();
             await Initialize();
             TempData["SuccessMessage"] = "提交成功！";
-            return Page();
+            HttpContext.Session.SetInt32("FormerId", 0);
+            return Redirect("/BackEnd/Manage");
 
         }
     }
