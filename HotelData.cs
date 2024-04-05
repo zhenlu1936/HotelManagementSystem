@@ -15,10 +15,22 @@ public class Bill
     public DateTime bill_checkInTime { get; set; } = DateTime.Today;
     public DateTime bill_checkOutTime { get; set; } = DateTime.Today.AddDays(1);
     public bool bill_ifChecked { get; set; } = false;
-    public DateTime bill_payTime { get; set; }
+    public bool bill_ifOut { get; set; } = false;
+    public DateTime? bill_trueCheckInTime { get; set; }
+    public DateTime? bill_trueCheckOutTime { get; set; }
+    public DateTime? bill_payTime { get; set; }
     public bool bill_ifPaid { get; set; } = false;
     public ICollection<Client> clients { get; set; } = new List<Client>();
     public ICollection<Room> rooms { get; set; } = new List<Room>();
+}
+public class BillSearchInputModel
+{
+    public int? RoomTrueId { get; set; }
+    public DateTime? CheckInTime { get; set; }
+    public DateTime? CheckOutTime { get; set; }
+    public bool? IfPaid { get; set; }
+    public bool? IfOut { get; set; }
+    public bool? IfChecked { get; set; }
 }
 public class Client
 {
@@ -34,6 +46,14 @@ public class Client
     public int Billbill_id { get; set; }
 
 }
+
+public class ClientSearchInputModel
+{
+    public string? ClientName { get; set; }
+    public string? ClientTel { get; set; }
+    public string? ClientTrueId { get; set; }
+}
+
 public class Room
 {
     [Key]

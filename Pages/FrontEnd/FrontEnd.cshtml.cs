@@ -6,10 +6,17 @@ namespace HotelManagementSystem.Pages
 {
     public class FrontEndModel : PageModel
     {
+
         private readonly HotelManagementContext _context;
         public string ReturnUrl { get; set; }
         public IList<Bill> Bills { get; set; } = new List<Bill>();
         public IList<Client> Clients { get; set; } = new List<Client>();
+
+        [BindProperty]
+        public BillSearchInputModel BillSearchInput { get; set; } = new BillSearchInputModel();
+
+        [BindProperty]
+        public ClientSearchInputModel ClientSearchInput { get; set; } = new ClientSearchInputModel();
 
         public async Task Clear()
         {

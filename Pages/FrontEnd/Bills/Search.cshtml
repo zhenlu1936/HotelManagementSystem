@@ -9,17 +9,68 @@
     <form method="post">
         <div class="form-group mt-3 mb-3">
             <label for="RoomTrueId" class="control-label">房间号</label>
-            <input asp-for="RoomTrueId" class="form-control" />
-            <span asp-validation-for="RoomTrueId" class="text-danger"></span>
+            <input asp-for="BillSearchInput.RoomTrueId" class="form-control" />
+            <span asp-validation-for="BillSearchInput.RoomTrueId" class="text-danger"></span>
         </div>
         <div class="form-group mt-3 mb-3">
-            <label asp-for="CheckInTime" class="control-label">入住时间</label>
-            <input asp-for="CheckInTime" class="form-control" type="date" />
-            <span asp-validation-for="CheckInTime" class="text-danger"></span>
+            <label asp-for="BillSearchInput.CheckInTime" class="control-label">预计入住时间</label>
+            <input asp-for="BillSearchInput.CheckInTime" class="form-control" type="date" />
+            <span asp-validation-for="BillSearchInput.CheckInTime" class="text-danger"></span>
         </div>
         <div class="form-group mt-3 mb-3">
-            <label asp-for="CheckOutTime" class="control-label">退房时间</label>
-            <input asp-for="CheckOutTime" class="form-control" type="date" />
+            <label asp-for="BillSearchInput.CheckOutTime" class="control-label">预计退房时间</label>
+            <input asp-for="BillSearchInput.CheckOutTime" class="form-control" type="date" />
+        </div>
+        <div class="mb-3">
+            <label>是否入住</label>
+            <div>
+                <div class="form-check">
+                    <input asp-for="BillSearchInput.IfChecked" class="form-check-input" type="radio" value="true">
+                    <label asp-for="BillSearchInput.IfChecked" class="form-check-label">
+                        是
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input asp-for="BillSearchInput.IfChecked" class="form-check-input" type="radio" value="false">
+                    <label asp-for="BillSearchInput.IfChecked" class="form-check-label">
+                        否
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label>是否退房</label>
+            <div>
+                <div class="form-check">
+                    <input asp-for="BillSearchInput.IfOut" class="form-check-input" type="radio" value="true">
+                    <label asp-for="BillSearchInput.IfOut" class="form-check-label">
+                        是
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input asp-for="BillSearchInput.IfOut" class="form-check-input" type="radio" value="false">
+                    <label asp-for="BillSearchInput.IfOut" class="form-check-label">
+                        否
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label>是否结款</label>
+            <div>
+                <div class="form-check">
+                    <input asp-for="BillSearchInput.IfPaid" class="form-check-input" type="radio" value="true">
+                    <label asp-for="BillSearchInput.IfPaid" class="form-check-label">
+                        是
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input asp-for="BillSearchInput.IfPaid" class="form-check-input" type="radio" value="false">
+                    <label asp-for="BillSearchInput.IfPaid" class="form-check-label">
+                        否
+                    </label>
+                </div>
+            </div>
         </div>
         <div class="form-group mt-3 mb-3">
             <input type="submit" value="搜索" class="btn btn-primary" />
@@ -32,10 +83,17 @@
     <div>搜索结果：</div>
     <div>@await Html.PartialAsync("/Pages/FrontEnd/BillsTable.cshtml")</div>
 }
-else if (TempData["FirstTime"] != null)
+else if (TempData["BillSearchFirstTime"] != null && (string)TempData["BillSearchFirstTime"] != "Yes")
 {
     <div id="NoResult" class="alert alert-danger">
-        没有匹配的结果
+        @if (TempData["BillSearchNoInput"] == null)
+        {
+            <span>没有匹配的结果</span>
+        }
+        else
+        {
+            <span>请输入您需要查找的属性</span>
+        }
     </div>
 }
 

@@ -9,18 +9,18 @@
     <form method="post">
         <div class="form-group mt-3 mb-3">
             <label for="ClientName" class="control-label">姓名</label>
-            <input asp-for="ClientName" class="form-control" />
-            <span asp-validation-for="ClientName" class="text-danger"></span>
+            <input asp-for="ClientSearchInput.ClientName" class="form-control" />
+            <span asp-validation-for="ClientSearchInput.ClientName" class="text-danger"></span>
         </div>
         <div class="form-group mt-3 mb-3">
             <label for="ClientTel" class="control-label">电话</label>
-            <input asp-for="ClientTel" class="form-control" />
-            <span asp-validation-for="ClientTel" class="text-danger"></span>
+            <input asp-for="ClientSearchInput.ClientTel" class="form-control" />
+            <span asp-validation-for="ClientSearchInput.ClientTel" class="text-danger"></span>
         </div>
         <div class="form-group mt-3 mb-3">
             <label for="ClientTrueId" class="control-label">身份证号</label>
-            <input asp-for="ClientTrueId" class="form-control" />
-            <span asp-validation-for="ClientTrueId" class="text-danger"></span>
+            <input asp-for="ClientSearchInput.ClientTrueId" class="form-control" />
+            <span asp-validation-for="ClientSearchInput.ClientTrueId" class="text-danger"></span>
         </div>
         <div class="form-group mt-3 mb-3">
             <input type="submit" value="搜索" class="btn btn-primary" />
@@ -33,10 +33,17 @@
     <div>搜索结果：</div>
     <div>@await Html.PartialAsync("/Pages/FrontEnd/ClientsTable.cshtml")</div>
 }
-else if (TempData["FirstTime"] != null)
+else if (TempData["ClientSearchFirstTime"] != null && (string)TempData["ClientSearchFirstTime"] != "Yes")
 {
     <div id="NoResult" class="alert alert-danger">
-        没有匹配的结果
+        @if (TempData["ClientSearchNoInput"] == null)
+        {
+            <span>没有匹配的结果</span>
+        }
+        else
+        {
+            <span>请输入您需要查找的属性</span>
+        }
     </div>
 }
 

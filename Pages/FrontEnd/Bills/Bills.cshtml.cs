@@ -9,8 +9,10 @@ using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow;
 
 namespace HotelManagementSystem.Pages
 {
+
     public class BillsModel : PageModel
     {
+
         private readonly HotelManagementContext _context;
         public bool Wrong { get; set; } = false;
         public int BillId { get; set; }
@@ -21,6 +23,9 @@ namespace HotelManagementSystem.Pages
 
         [BindProperty]
         public List<int> SelectedRoomIds { get; set; } = new List<int>();
+
+        [BindProperty]
+        public int? SpecificPrice { get; set; }
         public List<Room> AvailableRooms { get; set; } = new List<Room>();
         public int MaxCapacity { get; set; } = 0;
         public BillsModel(HotelManagementContext context)
@@ -62,6 +67,8 @@ namespace HotelManagementSystem.Pages
         }
         public async Task<IActionResult> OnGetAsync(int? billId)
         {
+            TempData.Clear();
+
             await IfFormerBill(billId);
 
             await OnGetAvailableRoomsAsync(NewBill.bill_checkInTime, NewBill.bill_checkOutTime);
@@ -83,7 +90,7 @@ namespace HotelManagementSystem.Pages
             }
             if (MaxCapacity < NewBill.bill_people)
             {
-                ModelState.AddModelError("NewBill.bill_people", "人数超出房间总容量");
+                ModelState.AddModelError("NewBill.bill_people", "人数超出所选房间总容量");
                 Wrong = true;
             }
         }
@@ -95,11 +102,10 @@ namespace HotelManagementSystem.Pages
                 return Page();
             }
 
-            int billId = (int)HttpContext.Session.GetInt32("FormerBillId");
-            bool exists = await _context.Bills.AnyAsync(b => b.bill_id == billId);
+            int? billId = HttpContext.Session.GetInt32("FormerBillId");
             var selectedRooms = await _context.Rooms.Where(r => SelectedRoomIds.Contains(r.room_id)).Include(room => room.roomclass).ToListAsync();
 
-            if (exists)
+            if (billId != null) //编辑已有账单
             {
                 FormerBill = await _context.Bills.Include(r => r.rooms).FirstOrDefaultAsync(b => b.bill_id == billId);
                 FormerBill.bill_people = NewBill.bill_people;
@@ -139,15 +145,20 @@ namespace HotelManagementSystem.Pages
                 return Page();
             }
 
-            if (!exists)
+            if (SpecificPrice != null) //若指定价格不为空则向订单填充制定价格
+            {
+                NewBill.bill_price = (int)SpecificPrice;
+            }
+
+            if (billId != null)
             {
                 _context.Bills.Add(NewBill);
             }
 
             await _context.SaveChangesAsync();
             HttpContext.Session.SetInt32("People", NewBill.bill_people);
-            HttpContext.Session.SetInt32("Id", NewBill.bill_id);
-            HttpContext.Session.SetInt32("FormerBillId", 0);
+            HttpContext.Session.SetInt32("BillId", NewBill.bill_id);
+            HttpContext.Session.Remove("FormerBillId");
 
             return RedirectToPage("/FrontEnd/Clients/Create");
         }

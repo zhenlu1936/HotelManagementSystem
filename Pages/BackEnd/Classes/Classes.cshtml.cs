@@ -45,7 +45,7 @@ namespace HotelManagementSystem.Pages
             }
             await _context.SaveChangesAsync();
             TempData["SuccessMessage"] = "提交成功！";
-            HttpContext.Session.SetInt32("FormerId", 0);
+            HttpContext.Session.Remove("FormerId");
             return Redirect("/BackEnd/Manage");
 
         }

@@ -10,7 +10,7 @@ namespace HotelManagementSystem.Pages
         private readonly HotelManagementContext _context;
         public bool Initialized { get; set; } = false;
         public int People { get; set; }
-        public int id { get; set; }
+        public int BillId { get; set; }
 
         [BindProperty]
         public IList<Client> NewClients { get; set; } = new List<Client>();
@@ -22,7 +22,7 @@ namespace HotelManagementSystem.Pages
 
         public async Task Initialize()
         {
-            var NewBill = await _context.Bills.Include(b => b.clients).FirstOrDefaultAsync(b => b.bill_id == id);
+            var NewBill = await _context.Bills.Include(b => b.clients).FirstOrDefaultAsync(b => b.bill_id == BillId);
             foreach (var client in NewBill.clients)
             {
                 if (NewClients.Count < People)
@@ -38,14 +38,14 @@ namespace HotelManagementSystem.Pages
         }
         public async Task<IActionResult> OnGetAsync(int? clientId)
         {
-            if (clientId == null)
+            if (clientId == null) //如果不是针对单个顾客的更改（即通过订单修改进入顾客修改）
             {
                 People = (int)HttpContext.Session.GetInt32("People");
-                id = (int)HttpContext.Session.GetInt32("Id");
+                BillId = (int)HttpContext.Session.GetInt32("BillId");
                 Initialized = true;
                 await Initialize();
             }
-            else
+            else //如果是针对单个顾客的更改
             {
                 People = 1;
                 var waitClient = await _context.Clients.FindAsync(clientId);
@@ -67,8 +67,8 @@ namespace HotelManagementSystem.Pages
             int? FormerId = HttpContext.Session.GetInt32("FormerId");
             if (FormerId == null)
             {
-                id = (int)HttpContext.Session.GetInt32("Id");
-                var NewBill = await _context.Bills.Include(b => b.clients).FirstOrDefaultAsync(b => b.bill_id == id);
+                BillId = (int)HttpContext.Session.GetInt32("BillId");
+                var NewBill = await _context.Bills.Include(b => b.clients).FirstOrDefaultAsync(b => b.bill_id == BillId);
                 foreach (var client in NewBill.clients)
                 {
                     _context.Clients.Remove(client); // 标记为删除状态
@@ -77,7 +77,7 @@ namespace HotelManagementSystem.Pages
 
                 foreach (var NewClient in NewClients)
                 {
-                    NewClient.Billbill_id = id;
+                    NewClient.Billbill_id = BillId;
                     NewBill.clients.Add(NewClient);
                 }
             }
@@ -94,9 +94,9 @@ namespace HotelManagementSystem.Pages
 
             await _context.SaveChangesAsync();
             TempData["SuccessMessage"] = "提交成功！";
-            HttpContext.Session.SetInt32("People", 0);
-            HttpContext.Session.SetInt32("Id", 0);
-            HttpContext.Session.SetInt32("FormerId", 0);
+            HttpContext.Session.Remove("People");
+            HttpContext.Session.Remove("BillId");
+            HttpContext.Session.Remove("FormerId");
 
             return RedirectToPage("/FrontEnd/Manage");
         }

@@ -21,7 +21,7 @@ namespace HotelManagementSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> BillDelete(int billId, int? roomId, DateTime? checkInTime, DateTime? checkOutTime, string returnUrl = null)
+        public async Task<IActionResult> BillDelete(int billId, string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
             var bill = await _context.Bills.FindAsync(billId);
@@ -56,20 +56,22 @@ namespace HotelManagementSystem.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            TempData["RoomId"] = roomId;
-            TempData["CheckInTime"] = checkInTime;
-            TempData["CheckOutTime"] = checkOutTime;
+
             return Redirect(returnUrl);
         }
 
         [HttpPost]
-        public async Task<IActionResult> BillCheck(int billId, int? roomId, DateTime? checkInTime, DateTime? checkOutTime, string returnUrl = null)
+        public async Task<IActionResult> BillCheck(int billId, string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
             var bill = await _context.Bills.FindAsync(billId);
             if (bill != null)
             {
                 bill.bill_ifChecked = !bill.bill_ifChecked;
+                if (bill.bill_ifChecked == true)
+                {
+                    bill.bill_trueCheckInTime = DateTime.Now;
+                }
 
                 if (bill.bill_checkInTime <= DateTime.Today && DateTime.Today <= bill.bill_checkOutTime)
                 {
@@ -85,14 +87,41 @@ namespace HotelManagementSystem.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            TempData["RoomId"] = roomId;
-            TempData["CheckInTime"] = checkInTime;
-            TempData["CheckOutTime"] = checkOutTime;
             return Redirect(returnUrl);
         }
 
         [HttpPost]
-        public async Task<IActionResult> BillPay(int billId, int? roomId, DateTime? checkInTime, DateTime? checkOutTime, string returnUrl = null)
+        public async Task<IActionResult> BillOut(int billId, string returnUrl = null)
+        {
+            returnUrl ??= Url.Content("~/");
+            var bill = await _context.Bills.FindAsync(billId);
+            if (bill != null)
+            {
+                bill.bill_ifOut = !bill.bill_ifOut;
+                if (bill.bill_ifOut == true)
+                {
+                    bill.bill_trueCheckOutTime = DateTime.Now;
+                }
+
+                if (bill.bill_checkInTime <= DateTime.Today && DateTime.Today <= bill.bill_checkOutTime)
+                {
+                    var roomsContainingBill = await _context.Rooms
+                    .Include(room => room.bills) // 确保加载Bills集合
+                    .Where(room => room.bills.Any(bill => bill.bill_id == billId)) // 找出包含特定Bill的Room
+                    .ToListAsync();
+                    foreach (var room in roomsContainingBill)
+                    {
+                        room.room_ifStayIn = !room.room_ifStayIn;
+                    }
+                }
+                await _context.SaveChangesAsync();
+            }
+
+            return Redirect(returnUrl);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> BillPay(int billId, string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
             var bill = await _context.Bills.FindAsync(billId);
@@ -106,14 +135,11 @@ namespace HotelManagementSystem.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            TempData["RoomId"] = roomId;
-            TempData["CheckInTime"] = checkInTime;
-            TempData["CheckOutTime"] = checkOutTime;
             return Redirect(returnUrl);
         }
 
         [HttpPost]
-        public async Task<IActionResult> ClientDelete(int clientID, string returnUrl = null, string clientName = null, string clientTel = null, string clientTrueId = null)
+        public async Task<IActionResult> ClientDelete(int clientID, string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
             var client = await _context.Clients.FindAsync(clientID);
@@ -122,10 +148,6 @@ namespace HotelManagementSystem.Controllers
                 _context.Clients.Remove(client);
                 await _context.SaveChangesAsync();
             }
-
-            if (clientName != null) TempData["ClientName"] = clientName;
-            if (clientTel != null) TempData["ClientTel"] = clientTel;
-            if (clientTrueId != null) TempData["ClientTrueId"] = clientTrueId;
 
             return Redirect(returnUrl);
         }

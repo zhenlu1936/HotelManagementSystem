@@ -122,7 +122,7 @@ namespace HotelManagementSystem.Areas.Identity.Pages.Account
                 await _userStore.SetUserNameAsync(User, Input.stuff_number, CancellationToken.None);
 
                 IdentityResult result;
-                if (FormerId == null)
+                if (FormerId == null) //如果不是编辑已有员工
                 {
                     result = await _userManager.CreateAsync(User, Input.Password);
 
@@ -139,7 +139,8 @@ namespace HotelManagementSystem.Areas.Identity.Pages.Account
                 else
                 {
                     await _context.SaveChangesAsync();
-                    TempData["SuccessMessage"] = "成功！";
+                    TempData["SuccessMessage"] = "编辑成功！";
+                    HttpContext.Session.Remove("FormerId");
                     return Redirect("/Stuff/Manage");
                 }
             }

@@ -1,65 +1,124 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NuGet.Packaging;
 
 namespace HotelManagementSystem.Pages
 {
     public class BillSearchModel : FrontEndModel
     {
+        public void BillSearchRender(BillSearchInputModel input)
+        {
+            if (input.RoomTrueId != null)
+            {
+                TempData["BillSearchRoomId"] = input.RoomTrueId;
+            }
+            if (input.CheckInTime != null)
+            {
+                TempData["BillSearchCheckInTime"] = input.CheckInTime;
+            }
+            if (input.CheckOutTime != null)
+            {
+                TempData["BillSearchCheckOutTime"] = input.CheckOutTime;
+            }
+            if (input.IfPaid.HasValue)
+            {
+                TempData["BillSearchIfPaid"] = input.IfPaid.Value;
+            }
+            if (input.IfChecked.HasValue)
+            {
+                TempData["BillSearchIfChecked"] = input.IfChecked.Value;
+            }
+            if (input.IfOut.HasValue)
+            {
+                TempData["BillSearchIfOut"] = input.IfOut.Value;
+            }
+            TempData.Keep("BillSearchRoomId");
+            TempData.Keep("BillSearchCheckInTime");
+            TempData.Keep("BillSearchCheckOutTime");
+            TempData.Keep("BillSearchIfPaid");
+            TempData.Keep("BillSearchIfChecked");
+            TempData.Keep("BillSearchIfOut");
+        }
         private readonly HotelManagementContext _context;
 
         [BindProperty]
-        public int? RoomTrueId { get; set; }
+        public Boolean test { get; set; } = false;
 
-        [BindProperty]
-        public DateTime? CheckInTime { get; set; }
-
-        [BindProperty]
-        public DateTime? CheckOutTime { get; set; }
         public BillSearchModel(HotelManagementContext context) : base(context)
         {
             _context = context;
         }
-        private async Task ClientsSearch(int? roomId, DateTime? checkInTime, DateTime? checkOutTime)
+        private async Task BillsSearch(BillSearchInputModel input)
         {
-            RoomTrueId = roomId;
-            CheckInTime = checkInTime;
-            CheckOutTime = CheckOutTime;
+            BillSearchInput = input;
+            TempData["BillSearchNoInput"] = null;
+            if (BillSearchInput.GetType().GetProperties().All(p => p.GetValue(BillSearchInput) == null))
+            {
+                TempData["BillSearchNoInput"] = "Yes";
+            }
 
-            Bills = await _context.Bills
-                                .Where(b => (RoomTrueId == null || (b.rooms.Any(r => r.room_floor * 100 + r.room_number == RoomTrueId)))
-                                && (CheckInTime == null || b.bill_checkInTime == CheckInTime)
-                                && (CheckOutTime == null || b.bill_checkOutTime == CheckOutTime))
+            else Bills = await _context.Bills
+                                .Where(b => (BillSearchInput.RoomTrueId == null || (b.rooms.Any(r => r.room_floor * 100 + r.room_number == BillSearchInput.RoomTrueId)))
+                                && (BillSearchInput.CheckInTime == null || b.bill_checkInTime == BillSearchInput.CheckInTime)
+                                && (BillSearchInput.CheckOutTime == null || b.bill_checkOutTime == BillSearchInput.CheckOutTime)
+                                && (BillSearchInput.IfPaid == null || b.bill_ifPaid == BillSearchInput.IfPaid)
+                                && (BillSearchInput.IfOut == null || b.bill_ifOut == BillSearchInput.IfOut)
+                                && (BillSearchInput.IfChecked == null || b.bill_ifChecked == BillSearchInput.IfChecked))
                                 .ToListAsync();
         }
         override public async Task<IActionResult> OnGetAsync()
         {
             ReturnUrl ??= $"{Request.Scheme}://{Request.Host}{Request.Path}{Request.QueryString}";
 
-            if (TempData["RoomId"] != null)
+            if (TempData["BillSearchRoomId"] != null)
             {
-                RoomTrueId = Convert.ToInt32(TempData["RoomId"]);
+                BillSearchInput.RoomTrueId = Convert.ToInt32(TempData["BillSearchRoomId"]);
             }
-            if (TempData["CheckInTime"] != null)
+            if (TempData["BillSearchCheckInTime"] != null)
             {
-                CheckInTime = Convert.ToDateTime(TempData["CheckInTime"]);
+                BillSearchInput.CheckInTime = Convert.ToDateTime(TempData["BillSearchCheckInTime"]);
             }
-            if (TempData["CheckOutTime"] != null)
+            if (TempData["BillSearchCheckOutTime"] != null)
             {
-                CheckOutTime = Convert.ToDateTime(TempData["CheckOutTime"]);
+                BillSearchInput.CheckOutTime = Convert.ToDateTime(TempData["BillSearchCheckOutTime"]);
+            }
+            if (TempData["BillSearchIfPaid"] != null)
+            {
+                BillSearchInput.IfPaid = Convert.ToBoolean(TempData["BillSearchIfPaid"]);
+            }
+            if (TempData["BillSearchIfChecked"] != null)
+            {
+                BillSearchInput.IfChecked = Convert.ToBoolean(TempData["BillSearchIfChecked"]);
+            }
+            if (TempData["BillSearchIfOut"] != null)
+            {
+                BillSearchInput.IfOut = Convert.ToBoolean(TempData["BillSearchIfOut"]);
             }
 
-            await ClientsSearch(RoomTrueId, CheckInTime, CheckOutTime);
+            TempData["BillSearchFirstTime"] = "Yes";
+            TempData.Keep("BillSearchFirstTime");
+
             return Page();
         }
-        public async Task<IActionResult> OnPostAsync(int? roomTrueId, DateTime? checkInTime, DateTime? checkOutTime)
+        public async Task<IActionResult> OnPostAsync()
         {
             ReturnUrl ??= $"{Request.Scheme}://{Request.Host}{Request.Path}{Request.QueryString}";
-            await ClientsSearch(roomTrueId, checkInTime, checkOutTime);
 
-            if (Bills.Count != 0) TempData["FirstTime"] = null;
-            else TempData["FirstTime"] = "无";
+            await BillsSearch(BillSearchInput);
+            if (TempData["BillSearchFirstTime"] != null)
+            {
+                if ((string)TempData["BillSearchFirstTime"] == "Yes")
+                {
+                    TempData["BillSearchFirstTime"] = "No";
+                }
+            }
+            else TempData["BillSearchFirstTime"] = "Yes";
+            TempData.Keep("BillSearchFirstTime");
+
+            BillSearchRender(BillSearchInput);
+
             return Page();
         }
     }

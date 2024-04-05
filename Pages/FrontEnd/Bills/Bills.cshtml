@@ -20,13 +20,17 @@
             <label asp-for="NewBill.bill_people" class="control-label">人数</label>
             <input asp-for="NewBill.bill_people" id="bill_people" class="form-control" />
             <span asp-validation-for="NewBill.bill_people" class="text-danger"></span>
-
+        </div>
+        <div class="form-group mt-3 mb-3">
+            <label asp-for="SpecificPrice" class="control-label">指定价格</label>
+            <input asp-for="SpecificPrice" class="form-control" placeholder="若不填充则默认不指定价格" />
+            <span asp-validation-for="SpecificPrice" class="text-danger"></span>
         </div>
         <div class="form-group mt-3 mb-3">
             <label asp-for="NewBill.bill_checkInTime" class="control-label">入住时间</label>
             <input asp-for="NewBill.bill_checkInTime" class="form-control"
                 value="@Model.NewBill.bill_checkInTime.ToString("yyyy-MM-dd")" type="date" />
-            <span asp-validation-for="NewBill.bill_checkInTime" class="text-danger"></span>
+            <span asp-validation-for=" NewBill.bill_checkInTime" class="text-danger"></span>
         </div>
         <div class="form-group mt-3 mb-3">
             <label asp-for="NewBill.bill_checkOutTime" class="control-label">退房时间</label>

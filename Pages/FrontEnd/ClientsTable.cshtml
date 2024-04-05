@@ -19,7 +19,7 @@
                     <td>@client.client_trueId</td>
                     <td>@client.client_tel</td>
                     <td>
-                        <a class="btn btn-primary mb-4" asp-area="" asp-page="/FrontEnd/Clients/Edit"
+                        <a class="btn btn-primary" asp-area="" asp-page="/FrontEnd/Clients/Edit"
                             asp-route-clientId="@client.client_id">编辑</a>
                     </td>
                     <td>
@@ -27,13 +27,6 @@
                             onclick="return confirm('确定要删除这个客人吗？');">
                             <input type="hidden" name="clientID" value="@client.client_id" />
                             <input type="hidden" name="returnUrl" value="@Model.ReturnUrl">
-                            @if (Model.GetType() == typeof(ClientSearchModel))
-                            {
-                                ClientSearchModel CSModel = (ClientSearchModel)Model;
-                                <input type="hidden" name="clientName" value="@CSModel.ClientName" />
-                                <input type="hidden" name="clientTel" value="@CSModel.ClientTel" />
-                                <input type="hidden" name="clientTrueId" value="@CSModel.ClientTrueId" />
-                            }
                             <button type="submit" class="btn btn-danger">删除</button>
                         </form>
                     </td>

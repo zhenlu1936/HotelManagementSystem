@@ -30,7 +30,7 @@
                         }
                     </td>
                     <td>
-                        <a class="btn btn-info mb-4" asp-area="" asp-page="./Rooms/Detail"
+                        <a class="btn btn-info" asp-area="" asp-page="./Rooms/Detail"
                             asp-route-roomId="@Room.room_id">房间详情</a>
                     </td>
                     @{
@@ -38,7 +38,7 @@
                         if (adminPermission)
                         {
                             <td>
-                                <a class="btn btn-primary mb-4" asp-area="" asp-page="/BackEnd/Rooms/Edit"
+                                <a class="btn btn-primary" asp-area="" asp-page="/BackEnd/Rooms/Edit"
                                     asp-route-roomId="@Room.room_id">编辑</a>
                             </td>
                             <td>

@@ -7,9 +7,12 @@
                 <th>订单编号</th>
                 <th>价格</th>
                 <th>预订时间</th>
-                <th>入住时间</th>
-                <th>退房时间</th>
+                <th>预计入住时间</th>
+                <th>预计退房时间</th>
                 <th>是否入住</th>
+                <th>实际入住时间</th>
+                <th>是否退房</th>
+                <th>实际退房时间</th>
                 <th>是否结款</th>
                 <th>结款时间</th>
             </tr>
@@ -27,10 +30,24 @@
                         @if (Bill.bill_ifChecked)
                         {
                             <span>是</span>
+                        <td>@Bill.bill_trueCheckInTime</td>
                         }
                         else
                         {
-                            <span>否</span>
+                        <span>否</span>
+                        <td>未入住</td>
+                        }
+                    </td>
+                    <td>
+                        @if (Bill.bill_ifOut)
+                        {
+                            <span>是</span>
+                        <td>@Bill.bill_trueCheckOutTime</td>
+                        }
+                        else
+                        {
+                        <span>否</span>
+                        <td>未退房</td>
                         }
                     </td>
                     <td>
@@ -42,59 +59,65 @@
                         else
                         {
                         <span>否</span>
-                        <td></td>
+                        <td>未结款</td>
                         }
                     </td>
                     <td>
-                        <a class="btn btn-info mb-4" asp-area="" asp-page="/FrontEnd/Bills/Detail"
+                        <a class="btn btn-info" asp-area="" asp-page="/FrontEnd/Bills/Detail"
                             asp-route-billId="@Bill.bill_id">订单详情</a>
                     </td>
                     <td>
-                        <form asp-action="BillCheck" asp-controller="FrontEnd" method="post">
-                            <input type="hidden" name="billId" value="@Bill.bill_id" />
-                            <input type="hidden" name="returnUrl" value="@Model.ReturnUrl">
-                            @if (Model.GetType() == typeof(BillSearchModel))
-                            {
-                                BillSearchModel CSModel = (BillSearchModel)Model;
-                                <input type="hidden" name="roomId" value="@CSModel.RoomTrueId" />
-                                <input type="hidden" name="checkInTime" value="@CSModel.CheckInTime" />
-                                <input type="hidden" name="checkOutTime" value="@CSModel.CheckOutTime" />
-                            }
-                            @if (Bill.bill_ifChecked)
-                            {
-                                <button type="submit" class="btn btn-primary">未入住</button>
-                            }
-                            else
-                            {
+                        @if (Bill.bill_checkInTime <= DateTime.Today && DateTime.Today <= Bill.bill_checkOutTime &&
+                       Bill.bill_ifOut == false)
+                        {
+                            <form asp-action="BillCheck" asp-controller="FrontEnd" method="post">
+                                <input type="hidden" name="billId" value="@Bill.bill_id" />
+                                <input type="hidden" name="returnUrl" value="@Model.ReturnUrl">
+                                @if (Bill.bill_ifChecked)
+                                {
+                                    <button type="submit" class="btn btn-primary">未入住</button>
+                                }
+                                else
+                                {
+                                    <button type="submit" class="btn btn-primary">已入住</button>
+                                }
+                            </form>
+                        }
+                    </td>
+                    <td>
+                        @if (Bill.bill_ifChecked == true)
+                        {
+                            <form asp-action="BillOut" asp-controller="FrontEnd" method="post">
+                                <input type="hidden" name="billId" value="@Bill.bill_id" />
+                                <input type="hidden" name="returnUrl" value="@Model.ReturnUrl">
+                                @if (Bill.bill_ifOut)
+                                {
+                                    <button type="submit" class="btn btn-primary">未退房</button>
+                                }
+                                else
+                                {
 
-                                <button type="submit" class="btn btn-primary">已入住</button>
-                            }
-                        </form>
+                                    <button type="submit" class="btn btn-primary">已退房</button>
+                                }
+                            </form>
+                        }
                     </td>
                     <td>
                         <form asp-action="BillPay" asp-controller="FrontEnd" method="post">
                             <input type="hidden" name="billId" value="@Bill.bill_id" />
                             <input type="hidden" name="returnUrl" value="@Model.ReturnUrl">
-                            @if (Model.GetType() == typeof(BillSearchModel))
-                            {
-                                BillSearchModel CSModel = (BillSearchModel)Model;
-                                <input type="hidden" name="roomId" value="@CSModel.RoomTrueId" />
-                                <input type="hidden" name="checkInTime" value="@CSModel.CheckInTime" />
-                                <input type="hidden" name="checkOutTime" value="@CSModel.CheckOutTime" />
-                            }
                             @if (Bill.bill_ifPaid)
                             {
                                 <button type="submit" class="btn btn-primary">未结款</button>
                             }
                             else
                             {
-
                                 <button type="submit" class="btn btn-primary">已结款</button>
                             }
                         </form>
                     </td>
                     <td>
-                        <a class="btn btn-primary mb-4" asp-area="" asp-page="/FrontEnd/Bills/Edit"
+                        <a class="btn btn-primary" asp-area="" asp-page="/FrontEnd/Bills/Edit"
                             asp-route-billId="@Bill.bill_id">编辑</a>
                     </td>
                     <td>
@@ -102,13 +125,6 @@
                             onclick="return confirm('确定要删除这个订单吗？');">
                             <input type="hidden" name="billId" value="@Bill.bill_id" />
                             <input type="hidden" name="returnUrl" value="@Model.ReturnUrl">
-                            @if (Model.GetType() == typeof(BillSearchModel))
-                            {
-                                BillSearchModel CSModel = (BillSearchModel)Model;
-                                <input type="hidden" name="roomId" value="@CSModel.RoomTrueId" />
-                                <input type="hidden" name="checkInTime" value="@CSModel.CheckInTime" />
-                                <input type="hidden" name="checkOutTime" value="@CSModel.CheckOutTime" />
-                            }
                             <button type="submit" class="btn btn-danger">删除</button>
                         </form>
                     </td>

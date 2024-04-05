@@ -10,7 +10,7 @@
     <form method="post">
         @for (int i = 0; i < Model.People; i++)
         {
-            <input type="hidden" name="id" value="@Model.id" />
+            <input type="hidden" name="id" value="@Model.BillId" />
             <div class="form-group mt-3 mb-3">
                 <label asp-for="NewClients[i].client_name" class="control-label">@($"客户{i + 1}姓名")</label>
                 <input asp-for="NewClients[i].client_name" class="form-control" />

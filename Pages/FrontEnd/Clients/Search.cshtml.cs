@@ -9,31 +9,36 @@ namespace HotelManagementSystem.Pages
     public class ClientSearchModel : FrontEndModel
     {
         private readonly HotelManagementContext _context;
-
-        [BindProperty]
-        public string? ClientName { get; set; }
-
-        [BindProperty]
-        public string? ClientTel { get; set; }
-
-        [BindProperty]
-        public string? ClientTrueId { get; set; }
-
         public ClientSearchModel(HotelManagementContext context) : base(context)
         {
             _context = context;
         }
-        private async Task ClientsSearch(string clientName = null, string clientTel = null, string clientTrueId = null)
+        public void ClientSearchRender(ClientSearchInputModel input)
         {
-            ClientName = clientName;
-            ClientTel = clientTel;
-            ClientTrueId = clientTrueId;
+            if (TempData["ClientName"] != null)
+                TempData["ClientName"] = input.ClientName;
+            if (TempData["ClientTel"] != null)
+                TempData["ClientTel"] = input.ClientTel;
+            if (TempData["ClientTrueId"] != null)
+                TempData["ClientTrueId"] = input.ClientTrueId;
+            TempData.Keep("ClientName");
+            TempData.Keep("ClientTel");
+            TempData.Keep("ClientTrueId");
+        }
+        private async Task ClientsSearch(ClientSearchInputModel input)
+        {
+            ClientSearchInput = input;
+            TempData.Remove("ClientSearchNoInput");
+            if (ClientSearchInput.GetType().GetProperties().All(p => p.GetValue(ClientSearchInput) == null))
+            {
+                TempData["ClientSearchNoInput"] = "Yes";
+            }
 
-            Clients = await _context.Clients
-                                .Where(c => (string.IsNullOrEmpty(clientName) || c.client_name.Contains(clientName))
-                                && (string.IsNullOrEmpty(clientTel) || (c.client_tel != null && c.client_tel.Contains(clientTel)))
-                                && (string.IsNullOrEmpty(clientTrueId) || c.client_trueId.Contains(clientTrueId)))
-                                .ToListAsync();
+            else Clients = await _context.Clients
+                                       .Where(c => (string.IsNullOrEmpty(ClientSearchInput.ClientName) || c.client_name.Contains(ClientSearchInput.ClientName))
+                                       && (string.IsNullOrEmpty(ClientSearchInput.ClientTel) || (c.client_tel != null && c.client_tel.Contains(ClientSearchInput.ClientTel)))
+                                       && (string.IsNullOrEmpty(ClientSearchInput.ClientTrueId) || c.client_trueId.Contains(ClientSearchInput.ClientTrueId)))
+                                       .ToListAsync();
 
         }
         override public async Task<IActionResult> OnGetAsync()
@@ -42,28 +47,38 @@ namespace HotelManagementSystem.Pages
 
             if (TempData["ClientName"] != null)
             {
-                ClientName = (string)TempData["ClientName"];
+                ClientSearchInput.ClientName = (string)TempData["ClientName"];
             }
             if (TempData["ClientTel"] != null)
             {
-                ClientTel = (string)TempData["ClientTel"];
+                ClientSearchInput.ClientTel = (string)TempData["ClientTel"];
             }
             if (TempData["ClientTrueId"] != null)
             {
-                ClientTrueId = (string)TempData["ClientTrueId"];
+                ClientSearchInput.ClientTrueId = (string)TempData["ClientTrueId"];
             }
 
-            await ClientsSearch(ClientName, ClientTel, ClientTrueId);
+            TempData["ClientSearchFirstTime"] = "Yes";
+            TempData.Keep("ClientSearchFirstTime");
 
             return Page();
         }
-        public async Task<IActionResult> OnPostAsync(string clientName = null, string clientTel = null, string clientTrueId = null)
+        public async Task<IActionResult> OnPostAsync()
         {
             ReturnUrl ??= $"{Request.Scheme}://{Request.Host}{Request.Path}{Request.QueryString}";
 
-            await ClientsSearch(clientName, clientTel, clientTrueId);
-            if (Clients.Count != 0) TempData["FirstTime"] = null;
-            else TempData["FirstTime"] = "无";
+            await ClientsSearch(ClientSearchInput);
+            if (TempData["ClientSearchFirstTime"] != null)
+            {
+                if ((string)TempData["ClientSearchFirstTime"] == "Yes")
+                {
+                    TempData["ClientSearchFirstTime"] = "No";
+                }
+            }
+            else TempData["ClientSearchFirstTime"] = "Yes";
+            TempData.Keep("ClientSearchFirstTime");
+
+            ClientSearchRender(ClientSearchInput);
 
             return Page();
         }

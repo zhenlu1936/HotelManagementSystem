@@ -48,7 +48,7 @@ namespace HotelManagementSystem.Pages
             var existingRoom = await _context.Rooms.FirstOrDefaultAsync(r => r.room_floor == NewRoom.room_floor && r.room_number == NewRoom.room_number);
             if (existingRoom != null && (FormerId == null || existingRoom.room_id != FormerId))
             {
-                ModelState.AddModelError("NewRoom.room_number", "房间编号已存在");
+                ModelState.AddModelError("NewRoom.room_number", "房间已存在");
                 await Initialize();
                 return Page();
             }
@@ -60,12 +60,12 @@ namespace HotelManagementSystem.Pages
                 var FormerRoom = await _context.Rooms.FindAsync(FormerId);
                 FormerRoom.room_floor = NewRoom.room_floor;
                 FormerRoom.room_number = NewRoom.room_number;
-                FormerRoom.roomclass = NewRoom.roomclass;
+                FormerRoom.Classclass_id = NewRoom.Classclass_id;
             }
             await _context.SaveChangesAsync();
             await Initialize();
             TempData["SuccessMessage"] = "提交成功！";
-            HttpContext.Session.SetInt32("FormerId", 0);
+            HttpContext.Session.Remove("FormerId");
             return Redirect("/BackEnd/Manage");
 
         }
