@@ -14,9 +14,14 @@
                 <th>订单编号</th>
                 <th>价格</th>
                 <th>预订时间</th>
-                <th>入住时间</th>
-                <th>退房时间</th>
+                <th>预计入住时间</th>
+                <th>预计退房时间</th>
                 <th>是否入住</th>
+                <th>实际入住时间</th>
+                <th>是否退房</th>
+                <th>实际退房时间</th>
+                <th>是否结款</th>
+                <th>结款时间</th>
             </tr>
         </thead>
         <tbody>
@@ -27,15 +32,41 @@
                 <td>@Model.Bill.bill_checkInTime.ToString("yyyy-MM-dd")</td>
                 <td>@Model.Bill.bill_checkOutTime.ToString("yyyy-MM-dd")</td>
                 <td>
-                    @if (Model.Bill.bill_ifChecked)
+                    @if (Model.Bill.bill_trueCheckInTime != null)
                     {
                         <span>是</span>
+                    <td>@Model.Bill.bill_trueCheckInTime</td>
                     }
                     else
                     {
-                        <span>否</span>
+                    <span>否</span>
+                    <td>未入住</td>
                     }
+                </td>
                 <td>
+                    @if (Model.Bill.bill_trueCheckOutTime != null)
+                    {
+                        <span>是</span>
+                    <td>@Model.Bill.bill_trueCheckOutTime</td>
+                    }
+                    else
+                    {
+                    <span>否</span>
+                    <td>未退房</td>
+                    }
+                </td>
+                <td>
+                    @if (Model.Bill.bill_payTime != null)
+                    {
+                        <span>是</span>
+                    <td>@Model.Bill.bill_payTime</td>
+                    }
+                    else
+                    {
+                    <span>否</span>
+                    <td>未结款</td>
+                    }
+                </td>
             </tr>
         </tbody>
     </table>

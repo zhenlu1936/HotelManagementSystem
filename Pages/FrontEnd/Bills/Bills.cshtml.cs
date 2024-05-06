@@ -122,6 +122,7 @@ namespace HotelManagementSystem.Pages
                     MaxCapacity += room.roomclass.class_capacity;
                 }
 
+                FormerBill.bill_price *= FormerBill.bill_checkOutTime.Day - FormerBill.bill_checkInTime.Day;
                 NewBill = FormerBill;
             }
             else
@@ -133,6 +134,8 @@ namespace HotelManagementSystem.Pages
                     NewBill.bill_price += room.roomclass.class_price;
                     MaxCapacity += room.roomclass.class_capacity;
                 }
+
+                NewBill.bill_price *= NewBill.bill_checkOutTime.Day - NewBill.bill_checkInTime.Day;
                 NewBill.bill_bookTime = DateTime.Now;
             }
 
@@ -150,7 +153,7 @@ namespace HotelManagementSystem.Pages
                 NewBill.bill_price = (int)SpecificPrice;
             }
 
-            if (billId != null)
+            if (billId == null)
             {
                 _context.Bills.Add(NewBill);
             }

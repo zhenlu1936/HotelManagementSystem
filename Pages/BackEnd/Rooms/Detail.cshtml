@@ -11,6 +11,38 @@
     <table class="table">
         <thead>
             <tr>
+                <th>房间编号</th>
+                <th>楼层</th>
+                <th>层内序号</th>
+                <th>类型</th>
+                <th>是否入住</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Room.room_trueId</td>
+                <td>@Model.Room.room_floor</td>
+                <td>@Model.Room.room_number</td>
+                <td>@Model.Room.roomclass.class_name</td>
+                <td>
+                    @if (Model.Room.room_ifStayIn)
+                    {
+                        <span>是</span>
+                    }
+                    else
+                    {
+                        <span>否</span>
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
                 <th>类型编号</th>
                 <th>名称</th>
                 <th>最大人数</th>
@@ -38,6 +70,7 @@
                 <th>入住时间</th>
                 <th>退房时间</th>
                 <th>是否入住</th>
+                <th>是否退房</th>
                 <th>是否结款</th>
             </tr>
         </thead>
@@ -51,7 +84,7 @@
                     <td>@Bill.bill_checkInTime.ToString("yyyy-MM-dd")</td>
                     <td>@Bill.bill_checkOutTime.ToString("yyyy-MM-dd")</td>
                     <td>
-                        @if (Bill.bill_ifChecked)
+                        @if (Bill.bill_trueCheckInTime != null)
                         {
                             <span>是</span>
                         }
@@ -61,7 +94,17 @@
                         }
                     </td>
                     <td>
-                        @if (Bill.bill_ifPaid)
+                        @if (Bill.bill_trueCheckOutTime != null)
+                        {
+                            <span>是</span>
+                        }
+                        else
+                        {
+                            <span>否</span>
+                        }
+                    </td>
+                    <td>
+                        @if (Bill.bill_payTime != null)
                         {
                             <span>是</span>
                         }

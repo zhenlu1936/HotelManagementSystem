@@ -3,12 +3,12 @@
 @using Microsoft.AspNetCore.Authorization;
 @model HotelManagementSystem.Pages.FrontEndModel;
 @{
-    ViewData["Title"] = "订单管理";
+    ViewData["Title"] = "前台管理";
 }
 
 <h1>@ViewData["Title"]</h1>
 
-<p>这里是订单管理系统。</p>
+<p>这里是前台管理系统。</p>
 
 <div>@await Html.PartialAsync("BillsTable")</div>
 
@@ -18,7 +18,14 @@
 
 <div><a class="btn btn-primary mb-4" asp-area="" asp-page="./Clients/Search">搜索顾客</a></div>
 
-<div><a class="btn btn-primary mb-4" asp-area="" asp-page="./Bills/Create">新订单</a></div>
+@{
+    var adminPermission = User.HasClaim("stuff_role", "经理") || User.HasClaim("stuff_role", "管理员") ||
+    User.HasClaim("stuff_role", "前台");
+    if (adminPermission)
+    {
+        <div><a class="btn btn-primary mb-4" asp-area="" asp-page="./Bills/Create">新订单</a></div>
+    }
+}
 
 @if (TempData["SuccessMessage"] != null)
 {

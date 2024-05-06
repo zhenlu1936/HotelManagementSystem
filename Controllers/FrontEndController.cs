@@ -39,9 +39,8 @@ namespace HotelManagementSystem.Controllers
                     if (billToRemove != null)
                     {
                         room.bills.Remove(billToRemove);
-                        if (bill.bill_checkInTime <= DateTime.Today
-                            && DateTime.Today <= bill.bill_checkOutTime
-                            && bill.bill_ifChecked == true)
+                        if (bill.bill_trueCheckInTime <= DateTime.Today
+                            && (bill.bill_trueCheckOutTime == null))
                         {
                             room.room_ifStayIn = false;
                         }
@@ -67,11 +66,10 @@ namespace HotelManagementSystem.Controllers
             var bill = await _context.Bills.FindAsync(billId);
             if (bill != null)
             {
-                bill.bill_ifChecked = !bill.bill_ifChecked;
-                if (bill.bill_ifChecked == true)
-                {
+                if (bill.bill_trueCheckInTime == null)
                     bill.bill_trueCheckInTime = DateTime.Now;
-                }
+                else
+                    bill.bill_trueCheckInTime = null;
 
                 if (bill.bill_checkInTime <= DateTime.Today && DateTime.Today <= bill.bill_checkOutTime)
                 {
@@ -97,11 +95,10 @@ namespace HotelManagementSystem.Controllers
             var bill = await _context.Bills.FindAsync(billId);
             if (bill != null)
             {
-                bill.bill_ifOut = !bill.bill_ifOut;
-                if (bill.bill_ifOut == true)
-                {
+                if (bill.bill_trueCheckOutTime == null)
                     bill.bill_trueCheckOutTime = DateTime.Now;
-                }
+                else
+                    bill.bill_trueCheckOutTime = null;
 
                 if (bill.bill_checkInTime <= DateTime.Today && DateTime.Today <= bill.bill_checkOutTime)
                 {
@@ -127,11 +124,11 @@ namespace HotelManagementSystem.Controllers
             var bill = await _context.Bills.FindAsync(billId);
             if (bill != null)
             {
-                bill.bill_ifPaid = !bill.bill_ifPaid;
-                if (bill.bill_ifPaid == true)
-                {
+                if (bill.bill_payTime == null)
                     bill.bill_payTime = DateTime.Now;
-                }
+                else
+                    bill.bill_payTime = null;
+
                 await _context.SaveChangesAsync();
             }
 

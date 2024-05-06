@@ -63,9 +63,9 @@ namespace HotelManagementSystem.Pages
                                 .Where(b => (BillSearchInput.RoomTrueId == null || (b.rooms.Any(r => r.room_floor * 100 + r.room_number == BillSearchInput.RoomTrueId)))
                                 && (BillSearchInput.CheckInTime == null || b.bill_checkInTime == BillSearchInput.CheckInTime)
                                 && (BillSearchInput.CheckOutTime == null || b.bill_checkOutTime == BillSearchInput.CheckOutTime)
-                                && (BillSearchInput.IfPaid == null || b.bill_ifPaid == BillSearchInput.IfPaid)
-                                && (BillSearchInput.IfOut == null || b.bill_ifOut == BillSearchInput.IfOut)
-                                && (BillSearchInput.IfChecked == null || b.bill_ifChecked == BillSearchInput.IfChecked))
+                                && (BillSearchInput.IfPaid == null || (b.bill_payTime == null && BillSearchInput.IfPaid == false) || (b.bill_payTime != null && BillSearchInput.IfPaid == true))
+                                && (BillSearchInput.IfOut == null || (b.bill_trueCheckOutTime == null && BillSearchInput.IfOut == false) || (b.bill_trueCheckOutTime != null && BillSearchInput.IfOut == true))
+                                && (BillSearchInput.IfChecked == null || (b.bill_trueCheckInTime == null && BillSearchInput.IfChecked == false) || (b.bill_trueCheckInTime != null && BillSearchInput.IfChecked == true)))
                                 .ToListAsync();
         }
         override public async Task<IActionResult> OnGetAsync()
@@ -99,6 +99,12 @@ namespace HotelManagementSystem.Pages
 
             TempData["BillSearchFirstTime"] = "Yes";
             TempData.Keep("BillSearchFirstTime");
+
+            if (BillSearchInput.GetType().GetProperties().Any(p => p.GetValue(BillSearchInput) != null))
+            {
+                await BillsSearch(BillSearchInput);
+                BillSearchRender(BillSearchInput);
+            }
 
             return Page();
         }

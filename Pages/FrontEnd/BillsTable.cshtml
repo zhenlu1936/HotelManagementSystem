@@ -10,11 +10,8 @@
                 <th>预计入住时间</th>
                 <th>预计退房时间</th>
                 <th>是否入住</th>
-                <th>实际入住时间</th>
                 <th>是否退房</th>
-                <th>实际退房时间</th>
                 <th>是否结款</th>
-                <th>结款时间</th>
             </tr>
         </thead>
         <tbody>
@@ -26,108 +23,104 @@
                     <td>@Bill.bill_bookTime</td>
                     <td>@Bill.bill_checkInTime.ToString("yyyy-MM-dd")</td>
                     <td>@Bill.bill_checkOutTime.ToString("yyyy-MM-dd")</td>
-                    <td>
-                        @if (Bill.bill_ifChecked)
-                        {
-                            <span>是</span>
-                        <td>@Bill.bill_trueCheckInTime</td>
-                        }
-                        else
-                        {
-                        <span>否</span>
-                        <td>未入住</td>
-                        }
-                    </td>
-                    <td>
-                        @if (Bill.bill_ifOut)
-                        {
-                            <span>是</span>
-                        <td>@Bill.bill_trueCheckOutTime</td>
-                        }
-                        else
-                        {
-                        <span>否</span>
-                        <td>未退房</td>
-                        }
-                    </td>
-                    <td>
-                        @if (Bill.bill_ifPaid)
-                        {
-                            <span>是</span>
-                        <td>@Bill.bill_payTime</td>
-                        }
-                        else
-                        {
-                        <span>否</span>
-                        <td>未结款</td>
-                        }
-                    </td>
+                    @if (Bill.bill_trueCheckInTime != null)
+                    {
+                        <td>是</td>
+                    }
+                    else
+                    {
+                        <td>否</td>
+                    }
+                    @if (Bill.bill_trueCheckOutTime != null)
+                    {
+                        <td>是</td>
+                    }
+                    else
+                    {
+                        <td>否</td>
+                    }
+                    @if (Bill.bill_payTime != null)
+                    {
+                        <td>是</td>
+                    }
+                    else
+                    {
+                        <td>否</td>
+                    }
                     <td>
                         <a class="btn btn-info" asp-area="" asp-page="/FrontEnd/Bills/Detail"
                             asp-route-billId="@Bill.bill_id">订单详情</a>
                     </td>
-                    <td>
-                        @if (Bill.bill_checkInTime <= DateTime.Today && DateTime.Today <= Bill.bill_checkOutTime &&
-                       Bill.bill_ifOut == false)
+                    @{
+                        var adminPermission = User.HasClaim("stuff_role", "经理") || User.HasClaim("stuff_role", "管理员") ||
+                        User.HasClaim("stuff_role", "前台");
+                        if (adminPermission)
                         {
-                            <form asp-action="BillCheck" asp-controller="FrontEnd" method="post">
-                                <input type="hidden" name="billId" value="@Bill.bill_id" />
-                                <input type="hidden" name="returnUrl" value="@Model.ReturnUrl">
-                                @if (Bill.bill_ifChecked)
+                            <td>
+                                @if (Bill.bill_checkInTime <= DateTime.Today && DateTime.Today <= Bill.bill_checkOutTime &&
+                           Bill.bill_trueCheckOutTime == null)
                                 {
-                                    <button type="submit" class="btn btn-primary">未入住</button>
+                                    <form asp-action="BillCheck" asp-controller="FrontEnd" method="post">
+                                        <input type="hidden" name="billId" value="@Bill.bill_id" />
+                                        <input type="hidden" name="returnUrl" value="@Model.ReturnUrl">
+                                        @if (Bill.bill_trueCheckInTime != null)
+                                        {
+                                            <button type="submit" class="btn btn-primary">未入住</button>
+                                        }
+                                        else
+                                        {
+                                            <button type="submit" class="btn btn-primary">已入住</button>
+                                        }
+                                    </form>
                                 }
-                                else
-                                {
-                                    <button type="submit" class="btn btn-primary">已入住</button>
-                                }
-                            </form>
-                        }
-                    </td>
-                    <td>
-                        @if (Bill.bill_ifChecked == true)
-                        {
-                            <form asp-action="BillOut" asp-controller="FrontEnd" method="post">
-                                <input type="hidden" name="billId" value="@Bill.bill_id" />
-                                <input type="hidden" name="returnUrl" value="@Model.ReturnUrl">
-                                @if (Bill.bill_ifOut)
-                                {
-                                    <button type="submit" class="btn btn-primary">未退房</button>
-                                }
-                                else
-                                {
+                            </td>
 
-                                    <button type="submit" class="btn btn-primary">已退房</button>
+                            <td>
+                                @if (Bill.bill_trueCheckInTime != null)
+                                {
+                                    <form asp-action="BillOut" asp-controller="FrontEnd" method="post">
+                                        <input type="hidden" name="billId" value="@Bill.bill_id" />
+                                        <input type="hidden" name="returnUrl" value="@Model.ReturnUrl">
+                                        @if (Bill.bill_trueCheckOutTime != null)
+                                        {
+                                            <button type="submit" class="btn btn-primary">未退房</button>
+                                        }
+                                        else
+                                        {
+
+                                            <button type="submit" class="btn btn-primary">已退房</button>
+                                        }
+                                    </form>
                                 }
-                            </form>
+                            </td>
+                            <td>
+                                <form asp-action="BillPay" asp-controller="FrontEnd" method="post">
+                                    <input type="hidden" name="billId" value="@Bill.bill_id" />
+                                    <input type="hidden" name="returnUrl" value="@Model.ReturnUrl">
+                                    @if (Bill.bill_payTime != null)
+                                    {
+                                        <button type="submit" class="btn btn-primary">未结款</button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="btn btn-primary">已结款</button>
+                                    }
+                                </form>
+                            </td>
+                            <td>
+                                <a class="btn btn-primary" asp-area="" asp-page="/FrontEnd/Bills/Edit"
+                                    asp-route-billId="@Bill.bill_id">编辑</a>
+                            </td>
+                            <td>
+                                <form asp-action="BillDelete" asp-controller="FrontEnd" method="post"
+                                    onclick="return confirm('确定要删除这个订单吗？');">
+                                    <input type="hidden" name="billId" value="@Bill.bill_id" />
+                                    <input type="hidden" name="returnUrl" value="@Model.ReturnUrl">
+                                    <button type="submit" class="btn btn-danger">删除</button>
+                                </form>
+                            </td>
                         }
-                    </td>
-                    <td>
-                        <form asp-action="BillPay" asp-controller="FrontEnd" method="post">
-                            <input type="hidden" name="billId" value="@Bill.bill_id" />
-                            <input type="hidden" name="returnUrl" value="@Model.ReturnUrl">
-                            @if (Bill.bill_ifPaid)
-                            {
-                                <button type="submit" class="btn btn-primary">未结款</button>
-                            }
-                            else
-                            {
-                                <button type="submit" class="btn btn-primary">已结款</button>
-                            }
-                        </form>
-                    </td>
-                    <td>
-                        <a class="btn btn-primary" asp-area="" asp-page="/FrontEnd/Bills/Edit"
-                            asp-route-billId="@Bill.bill_id">编辑</a>
-                    </td>
-                    <td>
-                        <form asp-action="BillDelete" asp-controller="FrontEnd" method="post"
-                            onclick="return confirm('确定要删除这个订单吗？');">
-                            <input type="hidden" name="billId" value="@Bill.bill_id" />
-                            <input type="hidden" name="returnUrl" value="@Model.ReturnUrl">
-                            <button type="submit" class="btn btn-danger">删除</button>
-                        </form>
-                    </td>
+                    }
                 </tr>
             }
         </tbody>

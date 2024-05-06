@@ -50,7 +50,7 @@ namespace HotelManagementSystem.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; } = new InputModel();
         public string ReturnUrl { get; set; }
-        public HotelStuff User { get; set; }
+        public HotelStuff NewUser { get; set; }
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
         public class InputModel
         {
@@ -80,16 +80,28 @@ namespace HotelManagementSystem.Areas.Identity.Pages.Account
 
         public async Task Initialize()
         {
-            RoleOptions = new SelectList(await _context.StuffRoles.ToListAsync(), "role_id", "role_name");
+            var Roles = await _context.StuffRoles.ToListAsync();
+            var user = await _userManager.GetUserAsync(User);
+            var claims = await _userManager.GetClaimsAsync(user);
+            var stuffRoleClaim = claims.FirstOrDefault(c => c.Type == "stuff_role");
+            if (stuffRoleClaim.Value == "管理员")
+            {
+                Roles = Roles.Where(r => r.role_id != 1 && r.role_id != 2).ToList();
+            }
+            if (stuffRoleClaim.Value == "经理")
+            {
+                Roles = Roles.Where(r => r.role_id != 1).ToList();
+            }
+            RoleOptions = new SelectList(Roles, "role_id", "role_name");
         }
         public async Task OnGetAsync(string stuffId, string returnUrl = null)
         {
             if (stuffId != null)
             {
-                User = await _context.Users.FindAsync(stuffId);
-                Input.stuff_number = User.stuff_number;
-                Input.stuff_name = User.stuff_name;
-                Input.stuff_role = User.Rolerole_id;
+                NewUser = await _context.Users.FindAsync(stuffId);
+                Input.stuff_number = NewUser.stuff_number;
+                Input.stuff_name = NewUser.stuff_name;
+                Input.stuff_role = NewUser.Rolerole_id;
 
                 HttpContext.Session.SetString("FormerId", stuffId);
             }
@@ -106,25 +118,25 @@ namespace HotelManagementSystem.Areas.Identity.Pages.Account
             string FormerId = HttpContext.Session.GetString("FormerId");
             if (FormerId != null)
             {
-                User = await _context.Users.FindAsync(FormerId);
-                Input.stuff_role = User.Rolerole_id;
+                NewUser = await _context.Users.FindAsync(FormerId);
+                Input.stuff_role = NewUser.Rolerole_id;
 
             }
 
             if (ModelState.IsValid)
             {
 
-                if (FormerId == null) User = CreateUser();
-                User.stuff_number = Input.stuff_number;
-                User.Rolerole_id = Input.stuff_role;
-                User.stuff_name = Input.stuff_name;
+                if (FormerId == null) NewUser = CreateUser();
+                NewUser.stuff_number = Input.stuff_number;
+                NewUser.Rolerole_id = Input.stuff_role;
+                NewUser.stuff_name = Input.stuff_name;
 
-                await _userStore.SetUserNameAsync(User, Input.stuff_number, CancellationToken.None);
+                await _userStore.SetUserNameAsync(NewUser, Input.stuff_number, CancellationToken.None);
 
                 IdentityResult result;
                 if (FormerId == null) //如果不是编辑已有员工
                 {
-                    result = await _userManager.CreateAsync(User, Input.Password);
+                    result = await _userManager.CreateAsync(NewUser, Input.Password);
 
                     if (result.Succeeded)
                     {

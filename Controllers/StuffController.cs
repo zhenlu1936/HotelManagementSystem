@@ -25,8 +25,12 @@ namespace HotelManagementSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(string Id)
         {
+            var user = await _userManager.GetUserAsync(User);
+            var claims = await _userManager.GetClaimsAsync(user);
+            var stuffRoleClaim = claims.FirstOrDefault(c => c.Type == "stuff_role");
+
             var Stuff = await _context.Users.FindAsync(Id);
-            if (Stuff != null)
+            if (Stuff != null && (stuffRoleClaim.Value == "管理员" && Stuff.Rolerole_id > 2))
             {
                 _context.Users.Remove(Stuff);
                 await _context.SaveChangesAsync();

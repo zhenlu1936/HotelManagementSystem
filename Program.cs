@@ -26,6 +26,11 @@ builder.Services.AddAuthorization(options =>
         policy.RequireAssertion(context =>
             context.User.HasClaim(claim =>
                 (claim.Type == "stuff_role" && (claim.Value == "管理员" || claim.Value == "经理")))));
+
+    options.AddPolicy("经理或管理员或前台", policy =>
+        policy.RequireAssertion(context =>
+            context.User.HasClaim(claim =>
+                (claim.Type == "stuff_role" && (claim.Value == "管理员" || claim.Value == "经理" || claim.Value == "前台")))));
 });
 
 builder.Services.AddDistributedMemoryCache(); // 使用内存缓存存储会话

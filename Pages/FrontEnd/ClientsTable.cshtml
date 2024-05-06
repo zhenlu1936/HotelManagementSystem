@@ -18,18 +18,25 @@
                     <td>@client.client_name</td>
                     <td>@client.client_trueId</td>
                     <td>@client.client_tel</td>
-                    <td>
-                        <a class="btn btn-primary" asp-area="" asp-page="/FrontEnd/Clients/Edit"
-                            asp-route-clientId="@client.client_id">编辑</a>
-                    </td>
-                    <td>
-                        <form asp-action="ClientDelete" asp-controller="FrontEnd" method="post"
-                            onclick="return confirm('确定要删除这个客人吗？');">
-                            <input type="hidden" name="clientID" value="@client.client_id" />
-                            <input type="hidden" name="returnUrl" value="@Model.ReturnUrl">
-                            <button type="submit" class="btn btn-danger">删除</button>
-                        </form>
-                    </td>
+                    @{
+                        var adminPermission = User.HasClaim("stuff_role", "经理") || User.HasClaim("stuff_role", "管理员") ||
+                        User.HasClaim("stuff_role", "前台");
+                        if (adminPermission)
+                        {
+                            <td>
+                                <a class="btn btn-primary" asp-area="" asp-page="/FrontEnd/Clients/Edit"
+                                    asp-route-clientId="@client.client_id">编辑</a>
+                            </td>
+                            <td>
+                                <form asp-action="ClientDelete" asp-controller="FrontEnd" method="post"
+                                    onclick="return confirm('确定要删除这个客人吗？');">
+                                    <input type="hidden" name="clientID" value="@client.client_id" />
+                                    <input type="hidden" name="returnUrl" value="@Model.ReturnUrl">
+                                    <button type="submit" class="btn btn-danger">删除</button>
+                                </form>
+                            </td>
+                        }
+                    }
                 </tr>
             }
         </tbody>

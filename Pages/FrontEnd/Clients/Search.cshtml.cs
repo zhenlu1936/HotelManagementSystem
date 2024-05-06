@@ -61,6 +61,12 @@ namespace HotelManagementSystem.Pages
             TempData["ClientSearchFirstTime"] = "Yes";
             TempData.Keep("ClientSearchFirstTime");
 
+            if (ClientSearchInput.GetType().GetProperties().Any(p => p.GetValue(ClientSearchInput) != null))
+            {
+                await ClientsSearch(ClientSearchInput);
+                ClientSearchRender(ClientSearchInput);
+            }
+
             return Page();
         }
         public async Task<IActionResult> OnPostAsync()

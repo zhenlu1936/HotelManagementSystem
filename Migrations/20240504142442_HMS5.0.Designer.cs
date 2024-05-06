@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelManagementSystem.Migrations
 {
     [DbContext(typeof(HotelManagementContext))]
-    [Migration("20240405090952_HMS4.7")]
-    partial class HMS47
+    [Migration("20240504142442_HMS5.0")]
+    partial class HMS50
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,15 +40,6 @@ namespace HotelManagementSystem.Migrations
 
                     b.Property<DateTime>("bill_checkOutTime")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<bool>("bill_ifChecked")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("bill_ifOut")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("bill_ifPaid")
-                        .HasColumnType("tinyint(1)");
 
                     b.Property<DateTime?>("bill_payTime")
                         .HasColumnType("datetime(6)");
