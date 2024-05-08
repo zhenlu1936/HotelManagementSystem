@@ -39,7 +39,7 @@ namespace HotelManagementSystem.Pages
             AvailableRooms = await _context.Rooms
                 .Where(room => (!room.bills.Any())
                 || (room.bills.All(room_bill => room_bill.bill_checkOutTime <= checkInTime || room_bill.bill_checkInTime >= checkOutTime))
-                || (NewBill.rooms.Contains(room)))
+                || (NewBill != null && NewBill.rooms.Contains(room)))
                 .ToListAsync();
             AvailableRooms = AvailableRooms.OrderBy(r => r.room_trueId).ToList();
 
@@ -67,6 +67,20 @@ namespace HotelManagementSystem.Pages
         }
         public async Task<IActionResult> OnGetAsync(int? billId)
         {
+
+            if (billId != null)
+            {
+                ViewData["Title"] = "编辑订单";
+                ViewData["Text"] = "这里是订单编辑系统。";
+                ViewData["Submit"] = "编辑";
+            }
+            else
+            {
+                ViewData["Title"] = "创建订单";
+                ViewData["Text"] = "这里是订单创建系统。";
+                ViewData["Submit"] = "创建";
+            }
+
             TempData.Clear();
 
             await IfFormerBill(billId);
@@ -163,7 +177,7 @@ namespace HotelManagementSystem.Pages
             HttpContext.Session.SetInt32("BillId", NewBill.bill_id);
             HttpContext.Session.Remove("FormerBillId");
 
-            return RedirectToPage("/FrontEnd/Clients/Create");
+            return RedirectToPage("/FrontEnd/Clients/Clients");
         }
     }
 }

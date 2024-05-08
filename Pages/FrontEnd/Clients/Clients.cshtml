@@ -1,4 +1,5 @@
-﻿@attribute [Authorize]
+﻿@page
+@attribute [Authorize(Policy = "经理或管理员或前台")]
 @using Microsoft.AspNetCore.Authorization;
 @model HotelManagementSystem.Pages.ClientModel
 

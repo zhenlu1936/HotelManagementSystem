@@ -1,8 +1,11 @@
+@page
+@attribute [Authorize(Policy = "经理或管理员或前台")]
+@using Microsoft.AspNetCore.Authorization;
 @model HotelManagementSystem.Pages.BillsModel
 
-<h1>@ViewBag.Title</h1>
+<h1>@ViewData["Title"]</h1>
 
-<p>@ViewBag.Text</p>
+<p>@ViewData["Text"]</p>
 
 <div>
     <form method="post">
@@ -28,25 +31,29 @@
         </div>
         <div class="form-group mt-3 mb-3">
             <label asp-for="NewBill.bill_checkInTime" class="control-label">入住时间</label>
-            <input asp-for="NewBill.bill_checkInTime" class="form-control"
+            <input asp-for="NewBill.bill_checkInTime" class="form-control" id="checkInTime"
                 value="@Model.NewBill.bill_checkInTime.ToString("yyyy-MM-dd")" type="date" />
             <span asp-validation-for=" NewBill.bill_checkInTime" class="text-danger"></span>
         </div>
         <div class="form-group mt-3 mb-3">
             <label asp-for="NewBill.bill_checkOutTime" class="control-label">退房时间</label>
-            <input asp-for="NewBill.bill_checkOutTime" class="form-control"
+            <input asp-for="NewBill.bill_checkOutTime" class="form-control" id="checkOutTime"
                 value="@Model.NewBill.bill_checkOutTime.ToString("yyyy-MM-dd")" type="date" />
         </div>
         <div class="form-group mt-3 mb-3">
-            <input type="submit" value="@ViewBag.Submit" class="btn btn-primary" />
+            <input type="submit" value="@ViewData["Submit"]" class="btn btn-primary" />
         </div>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
             $(document).ready(function () {
+                console.log("Document is ready");  // Debug: 检查页面加载状态
                 function fetchAvailableRooms() {
-                    var checkInDate = $('#NewBill_bill_checkInTime').val();
-                    var checkOutDate = $('#NewBill_bill_checkOutTime').val();
+                    console.log("fetchAvailableRooms function is called"); // Debug: 检查函数调用
+                    var checkInDate = $('#checkInTime').val();
+                    var checkOutDate = $('#checkOutTime').val();
+                    console.log("Check-in Date: " + checkInDate); // Debug: 显示输入的入住日期
+                    console.log("Check-out Date: " + checkOutDate); // Debug: 显示输入的退房日期
 
                     if (checkInDate && checkOutDate) {
                         $.ajax({
@@ -54,21 +61,26 @@
                             url: '/FrontEnd/Bills/Bills?handler=AvailableRooms',
                             data: { checkInTime: checkInDate, checkOutTime: checkOutDate },
                             success: function (data) {
+                                console.log(data);  // 查看返回的数据
+                                console.log(checkInDate, checkOutDate);  // 打印日期查看格式
                                 var rooms = $('#SelectedRoomIds');
                                 rooms.empty(); // 清空现有的选项
                                 $.each(data, function (index, item) {
                                     rooms.append($('<option></option>').val(item.value).text(item.text));
                                 });
+                                console.log("Complete."); // Debug: 日期不完整时的提示
                             },
                             error: function (xhr, status, error) {
                                 console.error("AJAX error:", status, error);
                             }
                         });
+                    } else {
+                        console.log("Dates are not complete."); // Debug: 日期不完整时的提示
                     }
                 }
 
                 // 当任一日期选择器的值改变时，获取可用房间
-                $('#NewBill_bill_checkInTime, #NewBill_bill_checkOutTime').change(fetchAvailableRooms);
+                $('#checkInTime, #checkOutTime').change(fetchAvailableRooms);
                 fetchAvailableRooms();
             });
         </script>

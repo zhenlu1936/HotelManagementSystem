@@ -16,7 +16,7 @@
     var adminPermission = User.HasClaim("stuff_role", "经理") || User.HasClaim("stuff_role", "管理员");
     if (adminPermission)
     {
-        <a class="btn btn-primary mb-4" asp-area="" asp-page="./Classes/Create">新房间类型</a>
+        <a class="btn btn-primary mb-4" asp-area="" asp-page="./Classes/Classes">新房间类型</a>
     }
 }
 
@@ -25,7 +25,7 @@
 @{
     if (adminPermission)
     {
-        <a class="btn btn-primary mb-4" asp-area="" asp-page="./Rooms/Create">新房间</a>
+        <a class="btn btn-primary mb-4" asp-area="" asp-page="./Rooms/Rooms">新房间</a>
     }
 }
 

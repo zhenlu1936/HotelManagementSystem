@@ -44,6 +44,9 @@ namespace HotelManagementSystem.Pages
                 BillId = (int)HttpContext.Session.GetInt32("BillId");
                 Initialized = true;
                 await Initialize();
+                ViewData["Title"] = "创建订单 - 顾客";
+                ViewData["Text"] = "请在这里填写客人信息。";
+                ViewData["Submit"] = "创建";
             }
             else //如果是针对单个顾客的更改
             {
@@ -51,6 +54,9 @@ namespace HotelManagementSystem.Pages
                 var waitClient = await _context.Clients.FindAsync(clientId);
                 NewClients.Add(waitClient);
                 HttpContext.Session.SetInt32("FormerId", (int)clientId);
+                ViewData["Title"] = "编辑顾客";
+                ViewData["Text"] = "请在这里编辑客人信息。";
+                ViewData["Submit"] = "编辑";
             }
 
             return Page();

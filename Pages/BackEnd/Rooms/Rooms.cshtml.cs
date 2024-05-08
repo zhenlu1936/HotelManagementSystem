@@ -32,6 +32,15 @@ namespace HotelManagementSystem.Pages
             {
                 NewRoom = await _context.Rooms.FindAsync(roomId);
                 HttpContext.Session.SetInt32("FormerId", (int)roomId);
+                ViewData["Title"] = "编辑房间";
+                ViewData["Text"] = "请在这里编辑房间";
+                ViewData["Submit"] = "编辑";
+            }
+            else
+            {
+                ViewData["Title"] = "创建房间";
+                ViewData["Text"] = "请在这里创建房间";
+                ViewData["Submit"] = "创建";
             }
             await Initialize();
             return Page();

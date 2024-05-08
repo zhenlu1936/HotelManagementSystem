@@ -20,6 +20,15 @@ namespace HotelManagementSystem.Pages
             {
                 NewClass = await _context.Classes.FindAsync(classId);
                 HttpContext.Session.SetInt32("FormerId", (int)classId);
+                ViewData["Title"] = "编辑房间类型";
+                ViewData["Text"] = "请在这里编辑房间类型";
+                ViewData["Submit"] = "编辑";
+            }
+            else
+            {
+                ViewData["Title"] = "创建房间类型";
+                ViewData["Text"] = "请在这里创建房间类型";
+                ViewData["Submit"] = "创建";
             }
             return Page();
         }

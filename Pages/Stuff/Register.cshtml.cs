@@ -104,6 +104,15 @@ namespace HotelManagementSystem.Areas.Identity.Pages.Account
                 Input.stuff_role = NewUser.Rolerole_id;
 
                 HttpContext.Session.SetString("FormerId", stuffId);
+                ViewData["Title"] = "编辑";
+                ViewData["Text"] = "为管理人员编辑账户。";
+                ViewData["Submit"] = "编辑";
+            }
+            else
+            {
+                ViewData["Title"] = "注册";
+                ViewData["Text"] = "为管理人员创建新账户。";
+                ViewData["Submit"] = "注册";
             }
 
             await Initialize();
