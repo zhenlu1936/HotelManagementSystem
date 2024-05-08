@@ -5,14 +5,37 @@
     ViewData["Title"] = "登录";
 }
 
-<h1>@ViewData["Title"]</h1>
+<head>
+    <style>
+        body,
+        html {
+            height: 100vh;
+            /* 视口高度 */
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
 
-<div class="row justify-content-center">
+        body {
+            background-image: url('/images/mainpage-background.png');
+            background-position: center center;
+            /* 图片居中显示 */
+            background-size: cover;
+            /* 覆盖整个背景区域，保持图片宽高比 */
+            background-attachment: fixed;
+            /* 背景固定，不随滚动条滚动 */
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+
+<div class="row justify-content-center centered-container">
     <div class="col-md-4 text-center">
         <section>
             <form id="account" method="post">
-                <h2>使用管理人员账号登录。</h2>
-                <hr />
+                <div class="mb-3">
+                    <h2>使用管理人员账号登录。</h2>
+                </div>
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 <div class="form-floating mb-3">
                     <input asp-for="Input.Number" class="form-control" autocomplete="username" aria-required="true"
@@ -28,8 +51,7 @@
                 </div>
                 <div class="checkbox mb-3">
                     <label asp-for="Input.RememberMe" class="form-label">
-                        <input class="form-check-input" asp-for="Input.RememberMe" />
-                        @Html.DisplayNameFor(m => m.Input.RememberMe)
+                        <input class="form-check-input" asp-for="Input.RememberMe" /> 记住我
                     </label>
                 </div>
                 <div>
@@ -40,9 +62,6 @@
                     <p>
                         <a id="forgot-password" asp-page="./ForgotPassword">忘记密码？</a>
                     </p>
-                    <!--<p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">注册新用户</a>
-                        </p>-->
                 </div>
             </form>
         </section>

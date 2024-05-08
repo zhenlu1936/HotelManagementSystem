@@ -2,13 +2,23 @@
 @attribute [Authorize(Policy = "经理或管理员")]
 @model HotelManagementSystem.Areas.Identity.Pages.Account.RegisterModel
 
-<h1>@ViewData["Title"]</h1>
+<head>
+    <style>
+        body,
+        html {
+            height: 100vh;
+            /* 视口高度 */
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
 
-<div class="row justify-content-center">
+<div class="row justify-content-center centered-container">
     <div class="col-md-4 text-center">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>@ViewData["Text"]</h2>
-            <hr />
+            <h2 class="mb-3">@ViewData["Text"]</h2>
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.stuff_number" class="form-control" autocomplete="username" aria-required="true" />

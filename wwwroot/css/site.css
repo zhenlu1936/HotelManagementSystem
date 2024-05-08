@@ -8,7 +8,11 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
@@ -19,4 +23,65 @@ html {
 
 body {
   margin-bottom: 60px;
+}
+
+.centered-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  margin-top: -10vh;
+  /* 向上移动10%的视口高度 */
+  justify-content: center;
+}
+
+.link-style {
+  color: #007bff;
+  /* Blue color for the link */
+  text-decoration: none;
+  /* Remove underline */
+}
+
+.link-style:hover {
+  text-decoration: underline;
+  /* Add underline on hover */
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.navbar {
+  background-image: url('/images/navbar-background.png');
+  /* 使用相对路径指向你的图片 */
+  background-size: cover;
+  /* 覆盖整个导航栏，保持图片比例 */
+  background-position: center;
+  /* 中心对齐图片 */
+  width: 100%;
+  /* 确保导航栏宽度与视口宽度相同 */
+  z-index: 1030;
+  /* 高于页面上的其他内容 */
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #0b5eb2;
+  border-color: #0b5eb2;
+}
+
+a {
+  text-decoration: none;
+  /* 移除下划线 */
+  color: #0b5eb2;
+  /* 设置链接颜色 */
 }

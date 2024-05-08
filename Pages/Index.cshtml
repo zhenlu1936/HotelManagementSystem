@@ -4,7 +4,36 @@
     ViewData["Title"] = "主页";
 }
 
-<div class="text-center">
+<head>
+    <link rel="stylesheet" href="/css/site.css">
+    <style>
+        .centered-container {
+            animation: fadeInUp 1.5s ease-in-out;
+        }
+
+        body,
+        html {
+            height: 100vh;
+            /* 视口高度 */
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        body {
+            background-image: url('/images/mainpage-background.png');
+            background-position: center center;
+            /* 图片居中显示 */
+            background-size: cover;
+            /* 覆盖整个背景区域，保持图片宽高比 */
+            background-attachment: fixed;
+            /* 背景固定，不随滚动条滚动 */
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+
+<div class="centered-container">
     <h1 class="display-4">欢迎使用UESTC酒店管理系统</h1>
     <p>访问<a href="https://www.uestc.edu.cn/">电子科技大学官网</a>以获取更多信息。</p>
 </div>
